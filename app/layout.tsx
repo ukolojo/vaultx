@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 import { WalletContextProvider } from "./providers";
+import { Analytics } from '@vercel/analytics/next';
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dmSans.className} antialiased`}>
         <WalletContextProvider>{children}</WalletContextProvider>
+        <Analytics />
       </body>
     </html>
   );
