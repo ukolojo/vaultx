@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  color: var(--vaultx-fg);
+  background: var(--vaultx-bg);
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .vaultx-glass {
+    border: 1px solid var(--vaultx-glass-border);
+    background: var(--vaultx-glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .vaultx-btn-primary {
+    transition: box-shadow 175ms ease, transform 175ms ease, opacity 175ms ease;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+  }
+
+  .vaultx-btn-primary:hover:not(:disabled) {
+    box-shadow: 0 0 28px rgba(255, 255, 255, 0.14);
+  }
+
+  .vaultx-transition {
+    transition: border-color 175ms ease, background-color 175ms ease,
+      box-shadow 175ms ease, color 175ms ease, opacity 175ms ease;
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translate(-50%, 12px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.25s ease-out forwards;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.2s ease-out forwards;
+  }
+}
+
+.wallet-adapter-modal-wrapper {
+  max-width: calc(100vw - 2rem) !important;
+  margin: 0 auto !important;
+}
+
+.wallet-adapter-button {
+  width: 100% !important;
+  justify-content: center !important;
+  font-size: 0.875rem !important;
+}
