@@ -8,6 +8,10 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import {
+  PhantomWalletAdapter,
+  SolflareWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
 
 import {
   type ComponentType,
@@ -29,7 +33,10 @@ const Modal = WalletModalProvider as ComponentType<{ children?: ReactNode }>;
 
 export function WalletContextProvider({ children }: { children: ReactNode }) {
   const endpoint = process.env.NEXT_PUBLIC_RPC_URL ?? "https://api.devnet.solana.com";
-  const wallets = useMemo<WalletAdapter[]>(() => [], []);
+  const wallets = useMemo(() => [
+    new PhantomWalletAdapter(),
+    new SolflareWalletAdapter(),
+  ], []);
 
   return (
     <Conn endpoint={endpoint}>
