@@ -181,17 +181,9 @@ export default function PayView() {
       setLedgerError(false);
       const pubkey = new PublicKey(to);
 
-      // Single RPC call — Helius connection already handles this fast
       const sigs = await connection.getSignaturesForAddress(pubkey, {
-        limit: 50,
+        limit: 20,
       });
-
-      console.log('[SIGS RAW]', sigs.slice(0, 5).map(s => ({
-        sig: s.signature.slice(0, 8),
-        memo: s.memo,
-        blockTime: s.blockTime,
-        err: s.err,
-      })))
 
       if (sigs.length === 0) {
         setLedger(prev => prev.filter(e => e.isNaira));
@@ -200,18 +192,88 @@ export default function PayView() {
 
       const entries: LedgerEntry[] = [];
 
-      for (const sig of sigs) {
-        if (!sig.memo) continue;
+      // Fetch all transactions in parallel
+      const txResults = await Promise.allSettled(
+        sigs.map(sig =>
+          connection.getParsedTransaction(sig.signature, {
+            maxSupportedTransactionVersion: 0,
+            commitment: "confirmed",
+          })
+        )
+      );
 
-        // Strip surrounding quotes Solana sometimes adds
-        const clean = sig.memo.replace(/^"|"$/g, "").trim();
+      for (let i = 0; i < sigs.length; i++) {
+        const sig = sigs[i];
+        const result = txResults[i];
 
-        // Multiple memos joined by " ; "
-        const memos = clean.split(" ; ").map(m => m.trim());
-        const vaultxMemo = memos.find(m => m.startsWith("VaultX"));
-        if (!vaultxMemo) continue;
+        // Fast path — use memo field on signature if available
+        if (sig.memo) {
+          const clean = sig.memo.replace(/^"|"$/g, "").trim();
+          const memos = clean.split(" ; ").map(m => m.trim());
+          const vaultxMemo = memos.find(m => m.startsWith("VaultX"));
+          if (vaultxMemo) {
+            const parts = vaultxMemo.split("|");
+            if (
+              parts.length >= 3 &&
+              parts[0].trim() === "VaultX" &&
+              parts[1].trim() === name.trim()
+            ) {
+              entries.push({
+                signature: sig.signature,
+                matric: parts[2].trim(),
+                blockTime: sig.blockTime ?? null,
+              });
+              continue;
+            }
+          }
+        }
 
-        const parts = vaultxMemo.split("|");
+        // Slow path — parse full transaction
+        if (result.status === "rejected" || !result.value) continue;
+        const tx = result.value;
+        const hits: string[] = [];
+
+        const tryIx = (ix: any) => {
+          if (
+            "program" in ix &&
+            ix.program === "spl-memo" &&
+            ix.parsed &&
+            typeof ix.parsed === "object"
+          ) {
+            const p = ix.parsed as {
+              type?: string;
+              info?: { memo?: string };
+            };
+            if (
+              p.type === "memo" &&
+              typeof p.info?.memo === "string"
+            ) {
+              hits.push(p.info.memo);
+            }
+          }
+        };
+
+        for (const ix of tx.transaction.message.instructions) {
+          tryIx(ix);
+        }
+        for (const group of tx.meta?.innerInstructions ?? []) {
+          for (const ix of group.instructions) {
+            tryIx(ix);
+          }
+        }
+        for (const line of tx.meta?.logMessages ?? []) {
+          const memoQuoted = line.match(/Memo \(len \d+\): "(.*)"/);
+          if (memoQuoted?.[1]) hits.push(memoQuoted[1]);
+          if (line.includes("Program log: ")) {
+            const after = line.split("Program log: ").pop();
+            if (after?.startsWith("VaultX")) hits.push(after);
+          }
+        }
+
+        const memo = hits.find(m => m.startsWith("VaultX")) ?? null;
+        if (!memo) continue;
+
+        const parts = memo.split("|");
         if (parts.length < 3) continue;
         if (parts[0].trim() !== "VaultX") continue;
         if (parts[1].trim() !== name.trim()) continue;
@@ -237,6 +299,7 @@ export default function PayView() {
           return true;
         });
       });
+
     } catch (err) {
       console.error("Ledger fetch error:", err);
       setLedgerError(true);
