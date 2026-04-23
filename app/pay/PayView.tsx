@@ -118,12 +118,15 @@ export default function PayView() {
     setRateLoading(true);
     try {
       const cgRes = await fetch(
-        "https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDT",
-        { cache: "no-store" }
+        "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd",
+        {
+          cache: "no-store",
+          headers: { "Accept": "application/json" }
+        }
       );
-      if (!cgRes.ok) throw new Error("Binance fetch failed");
+      if (!cgRes.ok) throw new Error("CoinGecko fetch failed");
       const cgData = await cgRes.json();
-      const solInUsd: number = parseFloat(cgData?.price ?? "0");
+      const solInUsd: number = cgData?.solana?.usd ?? 0;
       if (solInUsd === 0) throw new Error("SOL price returned 0");
 
       const fxRes = await fetch("https://open.er-api.com/v6/latest/USD", {
