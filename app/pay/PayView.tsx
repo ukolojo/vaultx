@@ -24,13 +24,7 @@ const WalletMultiButton = dynamic(
 
 type PaymentMode = "selection" | "sol" | "naira";
 
-type ParsedInstruction = {
-  program: string;
-  parsed?: {
-    type?: string;
-    info?: { memo?: string };
-  };
-};
+
 
 type LedgerEntry = {
   signature: string;
@@ -117,7 +111,7 @@ export default function PayView() {
     reference: string;
   } | null>(null);
   const [confirmStage, setConfirmStage] = useState<"idle" | "confirming" | "verified" | "failed">("idle");
-  const [countdown, setCountdown] = useState(0);
+  const [countdown] = useState(0);
 
 
   const fetchNgnRate = useCallback(async (solAmount: number) => {
@@ -254,7 +248,7 @@ export default function PayView() {
     return () => clearInterval(interval);
   }, [fetchLedger]);
 
-  const handlePay = useCallback(async () => {
+  async function handlePay() {
     if (!publicKey) {
       setPayError("Please connect your wallet to pay.");
       return;
@@ -298,7 +292,7 @@ export default function PayView() {
      } finally {
        setPaying(false);
      }
-   }, [publicKey, destinationKey, amountSol, matric, name]);
+  }
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-start px-4 py-8 sm:py-12">

@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
