@@ -459,7 +459,7 @@ export default function PayView() {
             {/* Main Glass Card */}
             <TiltCard className="w-full">
               <motion.div
-                className="glow-border rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 flex flex-col gap-5"
+                className="glow-border glass-edge glass-depth rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 flex flex-col gap-5"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
@@ -570,7 +570,7 @@ export default function PayView() {
                           whileTap={{ scale: 0.97 }}
                           transition={{ type: "spring", stiffness: 400, damping: 17 }}
                           onClick={() => { setPaymentMode("sol"); setConfirmStage("idle"); setHasAddedEntry(false); }}
-                          className="w-full py-3 sm:py-4 rounded-xl
+                          className="btn-shimmer w-full py-3 sm:py-4 rounded-xl
                             bg-[#FF6B35]/10 border border-[#FF6B35]/30
                             text-[#FF6B35] text-sm sm:text-base font-semibold
                             hover:bg-[#FF6B35]/20 hover:border-[#FF6B35]/50
@@ -584,7 +584,7 @@ export default function PayView() {
                           whileTap={{ scale: 0.98 }}
                           transition={{ type: "spring", stiffness: 400, damping: 20 }}
                           onClick={() => { setPaymentMode("naira"); setConfirmStage("idle"); setHasAddedEntry(false); }}
-                          className="w-full py-3 sm:py-4 rounded-xl
+                          className="btn-shimmer w-full py-3 sm:py-4 rounded-xl
                             bg-white/[0.06] border border-white/[0.10]
                             text-white/60 text-sm sm:text-base font-medium
                             hover:bg-white/[0.10] hover:text-white hover:border-white/20
@@ -627,7 +627,7 @@ export default function PayView() {
                           type="button"
                           disabled={paying}
                           onClick={() => void handlePay()}
-                          className="w-full py-3 sm:py-4 rounded-xl
+                          className="btn-shimmer w-full py-3 sm:py-4 rounded-xl
                             bg-[#FF6B35]/10 border border-[#FF6B35]/30
                             text-[#FF6B35] text-sm sm:text-base font-semibold
                             hover:bg-[#FF6B35]/20 hover:border-[#FF6B35]/50
@@ -741,7 +741,7 @@ export default function PayView() {
                                 setLedger((prev) => [localEntry, ...prev]);
                                 setHasAddedEntry(true);
                               }}
-                              className="w-full py-3 rounded-xl font-semibold
+                              className="btn-shimmer w-full py-3 rounded-xl font-semibold
                                 transition-all duration-200 border border-[#FF6B35]/30
                                 bg-[#FF6B35]/10 text-[#FF6B35] hover:bg-[#FF6B35]/20
                                 hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]"
@@ -770,9 +770,8 @@ export default function PayView() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-              className="glow-border w-full rounded-2xl border border-white/[0.08]
+              className="glow-border glass-edge glass-depth w-full rounded-2xl border border-white/[0.08]
                 bg-white/[0.04] backdrop-blur-2xl saturate-150
-                shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]
                 overflow-hidden relative"
             >
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-transparent opacity-50 rounded-2xl" />
@@ -799,7 +798,10 @@ export default function PayView() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.05 }}
-                            className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
+                            className={
+                              "border-b border-white/5 transition-colors duration-150 " +
+                              (index === 0 ? "new-entry" : "hover:bg-white/5")
+                            }
                           >
                             <td className="px-4 py-3 text-white/80 font-mono text-xs sm:text-sm">
                               {entry.matric}

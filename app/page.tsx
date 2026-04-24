@@ -120,11 +120,7 @@ export default function Home() {
             </div>
             <h1 className="text-6xl sm:text-7xl font-bold
               tracking-tight leading-none reveal-top">
-              <ScrambleText
-                text="VAULTX"
-                className="text-white"
-                trigger="mount"
-              />
+              <span className="holo-text">VaultX</span>
             </h1>
             <p className="text-xs text-white/20 tracking-[0.3em]
               uppercase overflow-hidden reveal-fade">
@@ -144,8 +140,8 @@ export default function Home() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="px-8 py-3.5 rounded-xl text-sm 
-              font-semibold bg-[#FF6B35]/10 
+              className="btn-shimmer px-8 py-3.5 rounded-xl text-sm
+              font-semibold bg-[#FF6B35]/10
               border border-[#FF6B35]/30 text-[#FF6B35]
               hover:bg-[#FF6B35]/20 hover:border-[#FF6B35]/50
               hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]
@@ -159,7 +155,7 @@ export default function Home() {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="px-8 py-3.5 rounded-xl text-sm
+              className="btn-shimmer px-8 py-3.5 rounded-xl text-sm
               border border-white/[0.10] text-white/50
               hover:border-white/20 hover:text-white
               transition-all duration-200 text-center"
@@ -242,12 +238,11 @@ export default function Home() {
             ].map((item, index) => (
               <RevealOnScroll key={item.step} direction="up" delay={index * 0.1}>
                 <motion.div
-                  className="glow-border rounded-2xl border border-white/[0.06]
+                  className="glow-border glass-edge glass-depth rounded-2xl border border-white/[0.06]
                   bg-white/[0.03] backdrop-blur-xl p-6
                   flex flex-col gap-4 group
                   hover:border-[#FF6B35]/20
                   hover:bg-[#FF6B35]/[0.03]
-                  hover:shadow-[0_0_20px_rgba(255,107,53,0.06)]
                   transition-all duration-300"
                   initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -289,7 +284,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
           >
-          <div className="glow-border rounded-2xl border border-white/[0.08]
+          <div className="glow-border glass-edge glass-depth rounded-2xl border border-white/[0.08]
             bg-white/[0.03] backdrop-blur-2xl p-8
             flex flex-col gap-6 relative overflow-hidden">
             <div className="pointer-events-none absolute inset-0 

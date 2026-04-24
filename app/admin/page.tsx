@@ -99,7 +99,7 @@ export default function AdminPage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="glow-border w-full rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 sm:p-8 flex flex-col gap-5 relative overflow-hidden">
+        <form onSubmit={handleSubmit} className="glow-border glass-edge glass-depth w-full rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 sm:p-8 flex flex-col gap-5 relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0
             bg-gradient-to-br from-[#FF6B35]/[0.03]
             via-transparent to-transparent rounded-2xl" />
@@ -180,7 +180,7 @@ export default function AdminPage() {
 
           <motion.button
             type="submit"
-            className="w-full py-3.5 rounded-xl text-sm font-semibold
+            className="btn-shimmer w-full py-3.5 rounded-xl text-sm font-semibold
               bg-[#FF6B35]/10 border border-[#FF6B35]/30
               text-[#FF6B35] hover:bg-[#FF6B35]/20
               hover:border-[#FF6B35]/50
@@ -216,7 +216,7 @@ export default function AdminPage() {
             <motion.button
               type="button"
               onClick={copyUrl}
-              className="inline-flex items-center gap-2
+              className="btn-shimmer inline-flex items-center gap-2
                 w-full justify-center py-3 rounded-xl text-sm
                 font-semibold bg-[#FF6B35]/10 border border-[#FF6B35]/30
                 text-[#FF6B35] hover:bg-[#FF6B35]/20
