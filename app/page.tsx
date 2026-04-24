@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black/0 text-white
+    <div className="min-h-screen text-white
       flex flex-col relative overflow-hidden">
 
       {/* Background orange glow orbs */}

@@ -57,7 +57,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black/0 px-4 py-8 sm:py-12">
+    <div className="min-h-screen px-4 py-8 sm:py-12">
       <div className="w-full max-w-md mx-auto flex flex-col gap-6">
 
         {/* Navbar */}

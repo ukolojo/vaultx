@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+html, body {
   background-color: #000000;
+  min-height: 100%;
+}
+
+body {
   color: #ffffff;
   font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 }
@@ -96,6 +100,6 @@ body {
 
 @media (max-width: 640px) {
   .orb-container {
-    opacity: 0.3 !important;
+    opacity: 0.5 !important;
   }
 }

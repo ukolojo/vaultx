@@ -2,9 +2,16 @@
 
 export default function BackgroundOrb() {
   return (
-    <div className="pointer-events-none fixed inset-0
-      z-0 overflow-hidden orb-container">
-
+    <div
+      className="orb-container"
+      style={{
+        pointerEvents: 'none',
+        position: 'fixed',
+        inset: 0,
+        zIndex: 0,
+        overflow: 'hidden',
+      }}
+    >
       {/* Main rotating sphere */}
       <div
         style={{
@@ -12,8 +19,8 @@ export default function BackgroundOrb() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '600px',
-          height: '600px',
+          width: 'min(600px, 90vw)',
+          height: 'min(600px, 90vw)',
           borderRadius: '50%',
           background: `
             radial-gradient(circle at 35% 35%,
@@ -30,10 +37,10 @@ export default function BackgroundOrb() {
             0 0 200px rgba(0,0,0,0.6)
           `,
           animation: 'orb-rotate 20s linear infinite',
-          opacity: 0.6,
+          opacity: 0.7,
         }}
       >
-        {/* Fine texture overlay using repeating SVG pattern */}
+        {/* Fine dot texture */}
         <div
           style={{
             position: 'absolute',
@@ -44,7 +51,7 @@ export default function BackgroundOrb() {
             animation: 'orb-rotate-reverse 30s linear infinite',
           }}
         />
-        {/* Latitude lines texture */}
+        {/* Latitude lines */}
         <div
           style={{
             position: 'absolute',
@@ -61,7 +68,7 @@ export default function BackgroundOrb() {
             `,
           }}
         />
-        {/* Longitude lines texture */}
+        {/* Longitude lines */}
         <div
           style={{
             position: 'absolute',
@@ -88,12 +95,10 @@ export default function BackgroundOrb() {
             width: '30%',
             height: '25%',
             borderRadius: '50%',
-            background: `
-              radial-gradient(ellipse,
-                rgba(255,255,255,0.06) 0%,
-                transparent 70%
-              )
-            `,
+            background: `radial-gradient(ellipse,
+              rgba(255,255,255,0.06) 0%,
+              transparent 70%
+            )`,
           }}
         />
         {/* Orange rim light */}
@@ -105,12 +110,10 @@ export default function BackgroundOrb() {
             width: '40%',
             height: '35%',
             borderRadius: '50%',
-            background: `
-              radial-gradient(ellipse,
-                rgba(255,107,53,0.06) 0%,
-                transparent 70%
-              )
-            `,
+            background: `radial-gradient(ellipse,
+              rgba(255,107,53,0.08) 0%,
+              transparent 70%
+            )`,
           }}
         />
       </div>
@@ -122,15 +125,12 @@ export default function BackgroundOrb() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '700px',
-          height: '700px',
+          width: 'min(700px, 100vw)',
+          height: 'min(700px, 100vw)',
           borderRadius: '50%',
-          background: 'transparent',
-          boxShadow: '0 0 120px rgba(255,107,53,0.03), 0 0 60px rgba(0,0,0,0.9)',
-          opacity: 0.8,
+          boxShadow: '0 0 120px rgba(255,107,53,0.04)',
         }}
       />
-
     </div>
   );
 }
