@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import ParticleField from "@/components/ParticleField";
+import TorusKnot from "@/components/TorusKnot";
 import BlockCounter from "@/components/BlockCounter";
 
 export default function Home() {
@@ -84,7 +84,7 @@ export default function Home() {
         <section className="w-full max-w-2xl flex flex-col
           items-center text-center gap-8 animate-fade-in
           relative">
-          <ParticleField />
+          <TorusKnot />
           <div className="relative z-10 flex flex-col items-center gap-4">
             <div className="inline-flex items-center gap-2 
               px-3 py-1.5 rounded-full 
