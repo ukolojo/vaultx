@@ -50,7 +50,18 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-vaultx-black text-vaultx-white px-4 py-12">
+    <div
+      className="min-h-screen text-vaultx-white px-4 py-12"
+      style={{
+        background: `
+          radial-gradient(ellipse at 20% 20%,
+            rgba(255,255,255,0.03) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%,
+            rgba(255,255,255,0.02) 0%, transparent 50%),
+          #000000
+        `
+      }}
+    >
       <div className="mx-auto max-w-lg space-y-8">
         <header className="space-y-2">
           <p className="text-sm uppercase tracking-[0.2em] text-white/50">
@@ -62,9 +73,18 @@ export default function AdminPage() {
           </p>
         </header>
 
+        <div className="text-center mb-6 animate-fade-in">
+          <h1 className="text-white/80 text-sm uppercase tracking-[0.3em] font-medium">
+            Admin Dashboard
+          </h1>
+          <p className="text-white/20 text-xs mt-1">
+            Generate payment links for your collection
+          </p>
+        </div>
+
         <form
           onSubmit={handleSubmit}
-          className="vaultx-glass vaultx-transition rounded-2xl p-6 space-y-5 shadow-none"
+          className="vaultx-glass vaultx-transition rounded-2xl p-6 space-y-5 shadow-none animate-fade-in-up"
         >
           <label className="block space-y-2">
             <span className="text-xs uppercase tracking-wider text-white/50">
@@ -74,7 +94,7 @@ export default function AdminPage() {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
               placeholder="e.g. Spring semester fee"
             />
           </label>
@@ -88,7 +108,7 @@ export default function AdminPage() {
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
               placeholder="0.1"
             />
             {adminNgn != null && (
@@ -105,7 +125,7 @@ export default function AdminPage() {
               required
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
-              className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-xs outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+              className="w-full rounded-xl px-4 py-3 font-mono text-xs outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
               placeholder="Solana address (devnet)"
             />
           </label>
@@ -116,7 +136,7 @@ export default function AdminPage() {
             <input
               value={onrampRecipient}
               onChange={(e) => setOnrampRecipient(e.target.value)}
-              className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-xs outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+              className="w-full rounded-xl px-4 py-3 font-mono text-xs outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
               placeholder="Solana address for onramp SOL"
             />
             <button
@@ -136,7 +156,7 @@ export default function AdminPage() {
         </form>
 
         {generatedPath && (
-          <div className="vaultx-glass vaultx-transition rounded-2xl p-6 space-y-3">
+          <div className="vaultx-glass vaultx-transition rounded-2xl p-6 space-y-3 animate-pulse-glow">
             <div className="flex items-center gap-2 text-white/50">
               <Link2 className="h-4 w-4" />
               <span className="text-xs uppercase tracking-wider">
