@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import ParticleField from "@/components/ParticleField";
+import BlockCounter from "@/components/BlockCounter";
 
 export default function Home() {
   return (
@@ -145,6 +146,11 @@ export default function Home() {
             </motion.button>
           </div>
         </section>
+
+        {/* Block Counter */}
+        <div className="flex justify-center">
+          <BlockCounter />
+        </div>
 
         {/* Stats */}
         <section className="w-full max-w-sm 
