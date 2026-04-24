@@ -58,6 +58,25 @@ body {
     from { transform: rotate(0deg); }
     to   { transform: rotate(-360deg); }
   }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+  @keyframes cursor-blink {
+    0%, 100% { border-color: rgba(255,107,53,0.8); }
+    50%       { border-color: transparent; }
+  }
+  .typewriter {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation:
+      typewriter 1.5s steps(20, end) 0.5s forwards,
+      cursor-blink 0.8s step-end 0.5s 6;
+    border-right: 2px solid rgba(255,107,53,0.8);
+  }
 }
 
 .wallet-adapter-button {

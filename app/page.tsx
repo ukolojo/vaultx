@@ -96,9 +96,11 @@ export default function Home() {
               tracking-tight leading-none">
               Vault<span className="text-[#FF6B35]">X</span>
             </h1>
-            <p className="text-xs text-white/20 
-              tracking-[0.3em] uppercase">
-              Don&apos;t trust — verify
+            <p className="text-xs text-white/20 tracking-[0.3em]
+              uppercase overflow-hidden">
+              <span className="typewriter">
+                Don&apos;t trust — verify
+              </span>
             </p>
           </div>
           <p className="text-white/50 text-base sm:text-lg 
