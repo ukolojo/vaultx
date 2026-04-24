@@ -4,6 +4,10 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 import { WalletContextProvider } from "./providers";
 import BackgroundOrb from "@/components/BackgroundOrb";
+import CustomCursor from "@/components/CustomCursor";
+import LoadingScreen from "@/components/LoadingScreen";
+import AnimatedFavicon from "@/components/AnimatedFavicon";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const geist = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,6 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={geist.variable}>
       <body className="antialiased">
+        <CustomCursor />
+        <LoadingScreen />
+        <AnimatedFavicon />
+        <ScrollProgress />
         <BackgroundOrb />
         <WalletContextProvider>{children}</WalletContextProvider>
       </body>

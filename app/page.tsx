@@ -2,10 +2,21 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import TorusKnot from "@/components/TorusKnot";
 import BlockCounter from "@/components/BlockCounter";
 
 export default function Home() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 40);
+    }
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <div className="min-h-screen text-white
       flex flex-col relative overflow-hidden">
@@ -29,48 +40,52 @@ export default function Home() {
       </div>
 
       {/* Navbar */}
-      <motion.nav
-        className="w-full sticky top-0 z-40
-          bg-white/[0.04] backdrop-blur-2xl
-          border-b border-white/[0.08]
-          hover:bg-white/[0.06] transition-all duration-300"
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+      <nav
+        className={
+          "w-full sticky top-0 z-40 bg-black/80 backdrop-blur-2xl " +
+          "border-b border-white/[0.06] transition-all duration-300 " +
+          (scrolled ? "py-0" : "")
+        }
       >
-        <div className="max-w-5xl mx-auto px-6 py-4 
-          flex items-center justify-between">
+        <div
+          className={
+            "max-w-5xl mx-auto px-6 flex items-center " +
+            "justify-between transition-all duration-300 " +
+            (scrolled ? "py-2" : "py-4")
+          }
+        >
           <div className="flex items-center gap-3">
-            <Link href="/" className="group">
-              <span className="text-white font-bold
-                tracking-tight text-xl group-hover:text-white/90
-                transition-colors duration-200">
-                Vault<span className="text-[#FF6B35] group-hover:text-[#FF6B35]/80">X</span>
-              </span>
-            </Link>
+            <span
+              className={
+                "text-white font-bold tracking-tight " +
+                "transition-all duration-300 " +
+                (scrolled ? "text-base" : "text-xl")
+              }
+            >
+              Vault<span className="text-[#FF6B35]">X</span>
+            </span>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="/admin"
+            <Link
+              href="/admin"
               className="text-xs text-white/40
-              hover:text-[#FF6B35] hover:bg-[#FF6B35]/10
-              px-3 py-1.5 rounded-lg transition-all duration-200
-              hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]">
+                hover:text-white transition-colors duration-200"
+            >
               Admin
             </Link>
-            <div className="flex items-center gap-2 px-3 py-1.5
-              rounded-lg bg-[#FF6B35]/10 border border-[#FF6B35]/20
-              hover:bg-[#FF6B35]/20 transition-all duration-200">
-              <span className="w-1.5 h-1.5 rounded-full
-                bg-[#FF6B35]
-                shadow-[0_0_6px_rgba(255,107,53,0.8)]
-                animate-orange-pulse" />
-              <span className="text-xs text-[#FF6B35]/80">
+            <div className="flex items-center gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full
+                  bg-[#FF6B35]
+                  shadow-[0_0_6px_rgba(255,107,53,0.8)]"
+              />
+              <span className="text-xs text-[#FF6B35]/60">
                 Devnet
               </span>
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       <motion.main
         className="flex-1 flex flex-col items-center 
