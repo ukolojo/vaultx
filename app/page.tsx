@@ -207,8 +207,8 @@ export default function Home() {
             ].map((item, index) => (
               <motion.div
                 key={item.step}
-                className="rounded-2xl border border-white/[0.06] 
-                bg-white/[0.03] backdrop-blur-xl p-6 
+                className="glow-border rounded-2xl border border-white/[0.06]
+                bg-white/[0.03] backdrop-blur-xl p-6
                 flex flex-col gap-4 group
                 hover:border-[#FF6B35]/20
                 hover:bg-[#FF6B35]/[0.03]
@@ -252,8 +252,8 @@ export default function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
         >
-          <div className="rounded-2xl border border-white/[0.08] 
-            bg-white/[0.03] backdrop-blur-2xl p-8 
+          <div className="glow-border rounded-2xl border border-white/[0.08]
+            bg-white/[0.03] backdrop-blur-2xl p-8
             flex flex-col gap-6 relative overflow-hidden">
             <div className="pointer-events-none absolute inset-0 
               bg-gradient-to-br from-[#FF6B35]/[0.04] 

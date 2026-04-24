@@ -99,7 +99,7 @@ export default function AdminPage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 sm:p-8 flex flex-col gap-5 relative overflow-hidden">
+        <form onSubmit={handleSubmit} className="glow-border w-full rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 sm:p-8 flex flex-col gap-5 relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0
             bg-gradient-to-br from-[#FF6B35]/[0.03]
             via-transparent to-transparent rounded-2xl" />
@@ -197,7 +197,7 @@ export default function AdminPage() {
         {/* Generated URL */}
         {generatedPath && (
           <motion.div
-            className="w-full rounded-2xl border border-[#FF6B35]/15 bg-[#FF6B35]/[0.03] backdrop-blur-2xl p-6 flex flex-col gap-4"
+            className="glow-border w-full rounded-2xl border border-[#FF6B35]/15 bg-[#FF6B35]/[0.03] backdrop-blur-2xl p-6 flex flex-col gap-4"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}

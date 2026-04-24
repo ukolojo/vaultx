@@ -84,6 +84,47 @@ body {
       box-shadow 0.1s ease-out;
     will-change: transform;
   }
+
+  @keyframes border-trace {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .glow-border {
+    position: relative;
+    border-radius: 1rem;
+  }
+
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 40%,
+      rgba(255,107,53,0.6) 50%,
+      transparent 60%,
+      transparent 100%
+    );
+    background-size: 300% 300%;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .glow-border:hover::before {
+    opacity: 1;
+    animation: border-trace 2s ease infinite;
+  }
 }
 
 .wallet-adapter-button {
