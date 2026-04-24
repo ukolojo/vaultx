@@ -45,6 +45,15 @@ body {
     background-clip: text;
     animation: shimmer 3s linear infinite;
   }
+
+  @keyframes orb-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes orb-rotate-reverse {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+  }
 }
 
 .wallet-adapter-button {
@@ -83,4 +92,10 @@ body {
 .wallet-adapter-modal-list li:hover {
   background: rgba(255,107,53,0.08) !important;
   border-color: rgba(255,107,53,0.2) !important;
+}
+
+@media (max-width: 640px) {
+  .orb-container {
+    opacity: 0.3 !important;
+  }
 }

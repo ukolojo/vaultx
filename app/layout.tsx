@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 import { WalletContextProvider } from "./providers";
+import BackgroundOrb from "@/components/BackgroundOrb";
 
 const geist = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={geist.variable}>
       <body className="antialiased">
+        <BackgroundOrb />
         <WalletContextProvider>{children}</WalletContextProvider>
       </body>
     </html>

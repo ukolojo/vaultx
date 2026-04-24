@@ -371,7 +371,7 @@ export default function PayView() {
   };
 
   return (
-    <div className="min-h-screen bg-black px-4 py-8 sm:py-12 relative overflow-hidden">
+    <div className="min-h-screen bg-black/0 px-4 py-8 sm:py-12 relative overflow-hidden">
 
       {/* Background glow orbs */}
       <div className="pointer-events-none fixed inset-0 z-0">
