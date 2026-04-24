@@ -12,6 +12,7 @@ import { ExternalLink, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { brand } from "@/lib/brand";
 
 const WalletMultiButton = dynamic(
   () => import("@solana/wallet-adapter-react-ui").then((mod) => mod.WalletMultiButton),
@@ -141,57 +142,62 @@ export default function OfframpView() {
   };
 
   return (
-    <div className="min-h-screen bg-vaultx-black text-vaultx-white px-4 py-10">
-      <div className="mx-auto flex max-w-2xl flex-col gap-8">
-        <header className="flex flex-wrap items-center justify-between gap-4">
+    <div className={`${brand.colors.background} ${brand.colors.textPrimary} px-4 py-10`}>
+      <div className={`mx-auto flex max-w-2xl flex-col ${brand.spacing.stackGapLarge}`}>
+        <header className={`flex flex-wrap items-center justify-between ${brand.spacing.inlineGapSmall}`}>
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-white/50">
-              VaultX
+            <p className={`${brand.typography.labelWide} ${brand.colors.primaryText}`}>
+              Solana · Devnet · Federal University Lokoja
             </p>
-            <h1 className="text-xl font-medium tracking-tight">Onramp Fiat to Crypto</h1>
+            <h1 className={`${brand.typography.heading2} ${brand.colors.textPrimary}`}>
+              VaultX
+            </h1>
+            <p className={`${brand.typography.caption} ${brand.colors.primaryTextHover} tracking-widest uppercase`}>
+              Don&apos;t trust — verify
+            </p>
           </div>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className={`flex flex-wrap items-center ${brand.spacing.stackGapSmall}`}>
               <WalletMultiButton className="!rounded-xl !border !border-white/15 !bg-white/[0.08] !font-sans !text-sm !text-white hover:!bg-white/[0.12] !h-auto !py-2 !px-4" />
             <Link
               href="/pay"
-              className="vaultx-transition text-xs text-white/45 hover:text-white/70"
+              className={`text-xs ${brand.colors.primaryText} hover:${brand.colors.primaryTextHover} transition-colors duration-200`}
             >
-              Pay
+              Pay →
             </Link>
             <Link
-              href="/offramp"
-              className="vaultx-transition text-xs text-white/45 hover:text-white/70"
+              href="/admin"
+              className={`text-xs ${brand.colors.primaryText} hover:${brand.colors.primaryTextHover} transition-colors duration-200`}
             >
-              Onramp
+              Admin →
             </Link>
             <Link
               href="/"
-              className="vaultx-transition text-xs text-white/45 hover:text-white/70"
+              className={`text-xs ${brand.colors.primaryText} hover:${brand.colors.primaryTextHover} transition-colors duration-200`}
             >
-              Home
+              Home →
             </Link>
           </div>
         </header>
 
-        <section className="vaultx-glass vaultx-transition space-y-6 rounded-2xl p-8">
+        <section className={`${brand.components.cardSecondary} ${brand.spacing.inlineGap} ${brand.spacing.cardPadding}`}>
           {step === "init" && (
             <>
-              <div className="space-y-1">
-                <h2 className="text-lg font-medium">Start Offramp</h2>
-                <p className="text-sm text-white/70">
+              <div className={brand.spacing.inlineGapSmall}>
+                <h2 className={`${brand.typography.heading3} ${brand.colors.textPrimary}`}>Start Offramp</h2>
+                <p className={`${brand.typography.body} ${brand.colors.textSecondary}`}>
                   Convert your SOL to Nigerian Naira
                 </p>
               </div>
               <input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+                className={brand.components.inputSecondary}
                 placeholder="Enter your email"
               />
               <button
                 onClick={handleInitiate}
                 disabled={loading || !email}
-                className="vaultx-btn-primary vaultx-transition w-full rounded-xl border border-white/15 bg-white/[0.1] py-3.5 text-sm font-medium text-white hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-50"
+                className={brand.components.buttonPrimary}
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Send OTP"}
               </button>
@@ -200,22 +206,22 @@ export default function OfframpView() {
 
           {step === "verify" && (
             <>
-              <div className="space-y-1">
-                <h2 className="text-lg font-medium">Verify Email</h2>
-                <p className="text-sm text-white/70">
+              <div className={brand.spacing.inlineGapSmall}>
+                <h2 className={`${brand.typography.heading3} ${brand.colors.textPrimary}`}>Verify Email</h2>
+                <p className={`${brand.typography.body} ${brand.colors.textSecondary}`}>
                   Enter the OTP sent to {email}
                 </p>
               </div>
               <input
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+                className={brand.components.inputSecondary}
                 placeholder="Enter OTP"
               />
               <button
                 onClick={handleVerify}
                 disabled={loading || !otp}
-                className="vaultx-btn-primary vaultx-transition w-full rounded-xl border border-white/15 bg-white/[0.1] py-3.5 text-sm font-medium text-white hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-50"
+                className={brand.components.buttonPrimary}
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Verify"}
               </button>
@@ -224,23 +230,23 @@ export default function OfframpView() {
 
           {step === "order" && (
             <>
-              <div className="space-y-1">
-                <h2 className="text-lg font-medium">Create Onramp Order</h2>
-                <p className="text-sm text-white/70">
+              <div className={brand.spacing.inlineGapSmall}>
+                <h2 className={`${brand.typography.heading3} ${brand.colors.textPrimary}`}>Create Onramp Order</h2>
+                <p className={`${brand.typography.body} ${brand.colors.textSecondary}`}>
                   Enter fiat amount to buy crypto
                 </p>
               </div>
               <input
                 value={fiatAmount}
                 onChange={(e) => setFiatAmount(e.target.value)}
-                className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+                className={brand.components.inputSecondary}
                 placeholder="Fiat Amount (e.g. 1500)"
                 type="number"
               />
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="vaultx-transition w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-white/25 focus:ring-1 focus:ring-white/20"
+                className={`${brand.components.inputSecondary} focus:border-orange-400 focus:ring-1 focus:ring-orange-500/30`}
               >
                 <option value="NGN">NGN</option>
                 <option value="USD">USD</option>
@@ -248,12 +254,12 @@ export default function OfframpView() {
               <button
                 onClick={handleCreateOrder}
                 disabled={loading || !fiatAmount || !recipient}
-                className="vaultx-btn-primary vaultx-transition w-full rounded-xl border border-white/15 bg-white/[0.1] py-3.5 text-sm font-medium text-white hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-50"
+                className={brand.components.buttonPrimary}
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create Order"}
               </button>
               {!recipient && (
-                <p className="text-sm text-amber-400/90">
+                <p className={`${brand.typography.caption} text-amber-400/90`}>
                   Set onramp recipient wallet in admin first.
                 </p>
               )}
@@ -262,24 +268,24 @@ export default function OfframpView() {
 
           {step === "details" && order && (
             <>
-              <div className="space-y-1">
-                <h2 className="text-lg font-medium">Send Fiat</h2>
-                <p className="text-sm text-white/70">
+              <div className={brand.spacing.inlineGapSmall}>
+                <h2 className={`${brand.typography.heading3} ${brand.colors.textPrimary}`}>Send Fiat</h2>
+                <p className={`${brand.typography.body} ${brand.colors.textSecondary}`}>
                   Send {order.fiatAmount} {currency} to the account below to receive {order.amount} SOL
                 </p>
               </div>
-              <div className="vaultx-glass rounded-xl p-4 space-y-2">
-                <p><strong>Bank:</strong> {order.bank}</p>
-                <p><strong>Account Name:</strong> {order.accountName}</p>
-                <p><strong>Account Number:</strong> {order.accountNumber}</p>
-                <p><strong>Amount:</strong> {order.fiatAmount} {currency}</p>
-                <p><strong>Receive:</strong> {order.amount} SOL</p>
-              </div>
-              <div className="flex gap-2">
+                <div className={`${brand.components.cardSecondary} ${brand.spacing.cardPaddingSmall} ${brand.spacing.inlineGapSmall}`}>
+                  <p><strong>Bank:</strong> {order.bank}</p>
+                  <p><strong>Account Name:</strong> {order.accountName}</p>
+                  <p><strong>Account Number:</strong> {order.accountNumber}</p>
+                  <p><strong>Amount:</strong> {order.fiatAmount} {currency}</p>
+                  <p><strong>Receive:</strong> {order.amount} SOL</p>
+                </div>
+              <div className={`flex ${brand.spacing.inlineGapSmall}`}>
                 <button
                   onClick={handleFetchTransaction}
                   disabled={loading}
-                  className="vaultx-btn-primary vaultx-transition flex-1 rounded-xl border border-white/15 bg-white/[0.1] py-3.5 text-sm font-medium text-white hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-50"
+                  className={`${brand.components.buttonPrimary} flex-1`}
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Check Status"}
                 </button>
@@ -288,13 +294,13 @@ export default function OfframpView() {
                     setTransaction({ ...transaction, status: "completed" });
                     alert("Fiat transfer simulated! SOL should be received shortly.");
                   }}
-                  className="vaultx-btn-primary vaultx-transition flex-1 rounded-xl border border-green-500/20 bg-green-500/10 py-3.5 text-sm font-medium text-green-400 hover:bg-green-500/20"
+                  className="flex-1 rounded-xl border border-green-500/20 bg-green-500/10 py-3.5 text-sm font-medium text-green-400 hover:bg-green-500/20 transition-all duration-200"
                 >
                   Simulate Transfer
                 </button>
               </div>
               {transaction && (
-                <div className="vaultx-glass rounded-xl p-4 space-y-2">
+              <div className={`${brand.components.cardSecondary} ${brand.spacing.cardPaddingSmall} ${brand.spacing.inlineGapSmall}`}>
                   <p><strong>Status:</strong> {transaction.status}</p>
                   <p><strong>Transaction ID:</strong> {transaction.id}</p>
                   <p><strong>Created:</strong> {new Date(transaction.createdAt).toLocaleString()}</p>
@@ -304,9 +310,25 @@ export default function OfframpView() {
           )}
 
           {error && (
-            <p className="text-sm text-red-400/90">{error}</p>
+            <p className={`${brand.typography.caption} text-red-400/90`}>{error}</p>
           )}
         </section>
+
+        {/* Footer */}
+        <footer className="w-full border-t border-orange-500/10 px-6 py-8">
+          <div className="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className={`${brand.colors.textCaption} ${brand.typography.caption}`}>
+              VaultX · Academic Session 2024/2025
+            </p>
+            <p className={`${brand.colors.textCaption} ${brand.typography.caption}`}>
+              Federal University Lokoja · Dept. of Computer Science
+            </p>
+            <p className={`${brand.colors.primaryTextHover} ${brand.typography.caption} italic`}>
+              Don&apos;t trust — verify
+            </p>
+          </div>
+        </footer>
+
       </div>
     </div>
   );

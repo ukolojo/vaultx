@@ -4,6 +4,7 @@ import { useSolPrice } from "@/hooks/useSolPrice";
 import { Copy, Link2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { brand } from "@/lib/brand";
 
 export default function AdminPage() {
   const { getNairaEquivalent } = useSolPrice();
@@ -52,40 +53,38 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-black px-4 py-8 sm:py-12">
       <div className="w-full max-w-md mx-auto flex flex-col gap-6">
-        <nav className="w-full sticky top-0 z-40 backdrop-blur-xl border-b border-white/10 bg-black/80">
+        <nav className="w-full sticky top-0 z-40 backdrop-blur-xl border-b border-orange-500/20 bg-black/90">
           <div className="max-w-md mx-auto px-4 py-4 flex items-center justify-between">
-            <span className="text-white font-semibold tracking-tight text-lg">
+            <span className={`${brand.typography.heading4} ${brand.colors.textPrimary}`}>
               VaultX
             </span>
-            <div className="flex gap-4">
-              <Link
-                href="/"
-                className="text-xs hover:opacity-70 text-white/40 transition-opacity"
-              >
-                Home
-              </Link>
-            </div>
+            <Link
+              href="/"
+              className={`text-xs ${brand.colors.primaryText} hover:${brand.colors.primaryTextHover} transition-colors duration-200`}
+            >
+              Home →
+            </Link>
           </div>
         </nav>
 
         <form
           onSubmit={handleSubmit}
-          className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8 flex flex-col gap-5"
+          className={`w-full ${brand.components.cardSecondary} ${brand.spacing.cardPadding} flex flex-col ${brand.spacing.stackGap}`}
         >
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-wider text-white/50">
+          <label className={`block ${brand.spacing.inlineGapSmall}`}>
+            <span className={`${brand.typography.label} ${brand.colors.textSecondary}`}>
               Title
             </span>
             <input
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
+              className={brand.components.inputSecondary}
               placeholder="e.g. Spring semester fee"
             />
           </label>
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-wider text-white/50">
+          <label className={`block ${brand.spacing.inlineGapSmall}`}>
+            <span className={`${brand.typography.label} ${brand.colors.textSecondary}`}>
               SOL amount
             </span>
             <input
@@ -94,83 +93,97 @@ export default function AdminPage() {
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
+              className={brand.components.inputSecondary}
               placeholder="0.1"
             />
             {adminNgn != null && (
-              <p className="text-white/50 text-sm">
+              <p className={`${brand.colors.textSecondary} ${brand.typography.caption}`}>
                 ≈ ₦{Math.round(adminNgn).toLocaleString("en-NG")}
               </p>
             )}
           </label>
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-wider text-white/50">
+          <label className={`block ${brand.spacing.inlineGapSmall}`}>
+            <span className={`${brand.typography.label} ${brand.colors.textSecondary}`}>
               Destination wallet
             </span>
             <input
               required
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 font-mono text-xs outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
+              className={`${brand.components.inputSecondary} font-mono text-xs focus:shadow-[0_0_20px_rgba(255,107,53,0.1)]`}
               placeholder="Solana address (devnet)"
             />
           </label>
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-wider text-white/50">
+          <label className={`block ${brand.spacing.inlineGapSmall}`}>
+            <span className={`${brand.typography.label} ${brand.colors.textSecondary}`}>
               Onramp Recipient Wallet
             </span>
             <input
               value={onrampRecipient}
               onChange={(e) => setOnrampRecipient(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 font-mono text-xs outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
+              className={`${brand.components.inputSecondary} font-mono text-xs focus:shadow-[0_0_20px_rgba(255,107,53,0.1)]`}
               placeholder="Solana address for onramp SOL"
             />
             <button
               type="button"
               onClick={saveOnrampRecipient}
-              className="mt-2 w-full py-3 rounded-xl font-medium transition-all duration-200 bg-white/10 border border-white/20 text-white hover:bg-white/15"
+              className={`${brand.components.buttonPrimary} mt-2`}
             >
               Save Onramp Recipient
             </button>
           </label>
           <button
             type="submit"
-            className="w-full py-3 rounded-xl font-medium transition-all duration-200 bg-white/10 border border-white/20 text-white hover:bg-white/15"
+            className={brand.components.buttonPrimary}
           >
             Generate link
           </button>
         </form>
 
         {generatedPath && (
-          <div className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 space-y-3">
-            <div className="flex items-center gap-2 text-white/50">
+          <div className={`w-full ${brand.components.cardSecondary} ${brand.spacing.cardPaddingSmall} ${brand.spacing.inlineGapSmall}`}>
+            <div className={`flex items-center ${brand.spacing.inlineGapSmall} ${brand.colors.textSecondary}`}>
               <Link2 className="h-4 w-4" />
-              <span className="text-xs uppercase tracking-wider">
+              <span className={brand.typography.label}>
                 Shareable URL
               </span>
             </div>
-            <p className="break-all font-mono text-xs text-white/90">
+            <p className={`break-all font-mono ${brand.typography.caption} ${brand.colors.textPrimary}`}>
               {fullShareUrl || generatedPath}
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className={`flex flex-wrap ${brand.spacing.inlineGapSmall}`}>
               <button
                 type="button"
                 onClick={copyUrl}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-xl font-medium transition-all duration-200 bg-white/10 border border-white/20 text-white hover:bg-white/15"
+                className={`${brand.components.buttonPrimary} inline-flex items-center ${brand.spacing.inlineGapSmall} px-4 py-2 text-sm`}
               >
                 <Copy className="h-4 w-4" />
                 {copied ? "Copied" : "Copy to clipboard"}
               </button>
             </div>
-            <p className="text-[11px] text-white/40">
+            <p className={`${brand.typography.caption} ${brand.colors.textCaption}`}>
               Path format:{" "}
-              <code className="text-white/60">
+              <code className={`${brand.colors.textMuted} ${brand.typography.caption}`}>
                 /pay?to=[WALLET]&amp;amt=[AMOUNT]&amp;name=[TITLE]
               </code>
             </p>
           </div>
         )}
 
+        {/* Footer */}
+        <footer className="w-full border-t border-orange-500/10 px-6 py-8">
+          <div className="max-w-md mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className={`${brand.colors.textCaption} ${brand.typography.caption}`}>
+              VaultX · Academic Session 2024/2025
+            </p>
+            <p className={`${brand.colors.textCaption} ${brand.typography.caption}`}>
+              Federal University Lokoja · Dept. of Computer Science
+            </p>
+            <p className={`${brand.colors.primaryTextHover} ${brand.typography.caption} italic`}>
+              Don&apos;t trust — verify
+            </p>
+          </div>
+        </footer>
 
       </div>
     </div>
