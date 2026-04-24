@@ -14,9 +14,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { brand } from "@/lib/brand";
 
-// framer-motion added for glassmorphism micro-interactions
 
 const WalletMultiButton = dynamic(
   () =>
