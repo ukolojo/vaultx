@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ParticleField from "@/components/ParticleField";
 
 export default function Home() {
   return (
@@ -79,9 +80,11 @@ export default function Home() {
       >
 
         {/* Hero */}
-        <section className="w-full max-w-2xl flex flex-col 
-          items-center text-center gap-8 animate-fade-in">
-          <div className="flex flex-col items-center gap-4">
+        <section className="w-full max-w-2xl flex flex-col
+          items-center text-center gap-8 animate-fade-in
+          relative">
+          <ParticleField />
+          <div className="relative z-10 flex flex-col items-center gap-4">
             <div className="inline-flex items-center gap-2 
               px-3 py-1.5 rounded-full 
               bg-[#FF6B35]/10 border border-[#FF6B35]/20">
@@ -103,14 +106,14 @@ export default function Home() {
               </span>
             </p>
           </div>
-          <p className="text-white/50 text-base sm:text-lg 
+          <p className="relative z-10 text-white/50 text-base sm:text-lg
             leading-relaxed max-w-lg">
             A transparency-first payment gateway for campus 
             financial collections. Every transaction recorded 
             permanently on-chain — visible to anyone, 
             controlled by no one.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 
+          <div className="relative z-10 flex flex-col sm:flex-row gap-3
             w-full sm:w-auto">
             <motion.button
               whileHover={{ scale: 1.02 }}
