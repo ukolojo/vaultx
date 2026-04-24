@@ -5,33 +5,10 @@
 body {
   background-color: #000000;
   color: #ffffff;
-  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer utilities {
-  .vaultx-glass {
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-  }
-
-  .vaultx-btn-primary {
-    transition: box-shadow 175ms ease, transform 175ms ease, 
-      opacity 175ms ease;
-    box-shadow: 0 0 20px rgba(255,255,255,0.08);
-  }
-
-  .vaultx-btn-primary:hover:not(:disabled) {
-    box-shadow: 0 0 28px rgba(255,255,255,0.14);
-  }
-
-  .vaultx-transition {
-    transition: border-color 175ms ease, background-color 175ms ease,
-      box-shadow 175ms ease, color 175ms ease, opacity 175ms ease;
-  }
-
-  /* Toast notification — keeps translate(-50%) for centering */
   @keyframes fade-in-up-toast {
     from { opacity: 0; transform: translate(-50%, 12px); }
     to   { opacity: 1; transform: translate(-50%, 0); }
@@ -40,60 +17,43 @@ body {
     animation: fade-in-up-toast 0.25s ease-out forwards;
   }
 
-  /* General fade in for cards and content */
   @keyframes fade-in {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   .animate-fade-in {
     animation: fade-in 0.3s ease-out forwards;
   }
 
-  /* Glow pulse for success state */
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.05); }
-    50%       { box-shadow: 0 0 40px rgba(255,255,255,0.12); }
+  @keyframes orange-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,0); }
+    50%       { box-shadow: 0 0 20px 4px rgba(255,107,53,0.15); }
   }
-  .animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
+  .animate-orange-pulse {
+    animation: orange-pulse 2s ease-in-out infinite;
   }
 
-  /* Shimmer for SOL amount */
   @keyframes shimmer {
     0%   { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
-  .shimmer-text {
-    background: linear-gradient(
-      90deg,
-      rgba(255,255,255,0.5) 0%,
-      rgba(255,255,255,1) 40%,
-      rgba(255,255,255,0.5) 100%
-    );
+  .shimmer-orange {
+    background: linear-gradient(90deg, #FF6B35 0%, #ffaa80 40%, #FF6B35 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: shimmer 3s linear infinite;
   }
-
-  /* Float for logo */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-4px); }
-  }
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
 }
 
-/* Wallet adapter overrides */
 .wallet-adapter-button {
-  background: rgba(255,255,255,0.06) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,107,53,0.08) !important;
+  border: 1px solid rgba(255,107,53,0.25) !important;
   border-radius: 0.75rem !important;
-  color: white !important;
+  color: #FF6B35 !important;
   font-size: 0.875rem !important;
+  font-weight: 600 !important;
   height: auto !important;
   padding: 0.75rem 1.5rem !important;
   transition: all 0.2s ease !important;
@@ -101,26 +61,26 @@ body {
   justify-content: center !important;
 }
 .wallet-adapter-button:hover {
-  background: rgba(255,255,255,0.10) !important;
-  box-shadow: 0 0 24px rgba(255,255,255,0.06) !important;
-  transform: translateY(-1px) !important;
+  background: rgba(255,107,53,0.15) !important;
+  border-color: rgba(255,107,53,0.4) !important;
+  box-shadow: 0 0 20px rgba(255,107,53,0.2) !important;
 }
 .wallet-adapter-modal-wrapper {
-  background: rgba(0,0,0,0.85) !important;
+  background: rgba(0,0,0,0.92) !important;
   backdrop-filter: blur(24px) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,107,53,0.15) !important;
   border-radius: 1.25rem !important;
 }
 .wallet-adapter-modal-title {
   color: white !important;
 }
 .wallet-adapter-modal-list li {
-  background: rgba(255,255,255,0.04) !important;
+  background: rgba(255,255,255,0.03) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   border-radius: 0.75rem !important;
   transition: all 0.2s ease !important;
 }
 .wallet-adapter-modal-list li:hover {
-  background: rgba(255,255,255,0.08) !important;
-  border-color: rgba(255,255,255,0.12) !important;
+  background: rgba(255,107,53,0.08) !important;
+  border-color: rgba(255,107,53,0.2) !important;
 }

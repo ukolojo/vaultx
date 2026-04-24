@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 import { WalletContextProvider } from "./providers";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
+const geist = localFont({
+  src: "./fonts/GeistVF.woff",
+  weight: "400 700",
+  style: "normal",
+  variable: "--font-geist",
 });
 
 export const metadata: Metadata = {
@@ -21,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.className} antialiased`}>
+    <html lang="en" className={geist.variable}>
+      <body className="antialiased">
         <WalletContextProvider>{children}</WalletContextProvider>
       </body>
     </html>

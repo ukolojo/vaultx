@@ -373,29 +373,48 @@ export default function PayView() {
   return (
     <div className="min-h-screen bg-black px-4 py-8 sm:py-12 relative overflow-hidden">
 
-      {/* Background glows */}
+      {/* Background glow orbs */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-white/[0.02] blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-white/[0.015] blur-[100px]" />
+        <motion.div
+          className="absolute top-[-10%] right-[-5%]
+            w-[350px] h-[350px] rounded-full
+            bg-[#FF6B35]/[0.04] blur-[100px]"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 4, repeat: -1, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[-10%] left-[-5%]
+            w-[250px] h-[250px] rounded-full
+            bg-[#FF6B35]/[0.03] blur-[80px]"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
       </div>
 
       {/* Success toast */}
       {showSuccess && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm flex items-center gap-3 px-5 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_0_30px_rgba(255,255,255,0.05)] animate-fade-in-up">
+        <motion.div
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm flex items-center gap-3 px-5 py-4 rounded-2xl border border-[#FF6B35]/20 bg-[#FF6B35]/[0.08] backdrop-blur-xl shadow-[0_0_30px_rgba(255,107,53,0.15)]"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+        >
           <div className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
           <span className="text-white text-sm font-medium tracking-wide">
             Transaction Successful
           </span>
-        </div>
+        </motion.div>
       )}
 
       <div className="w-full max-w-md mx-auto flex flex-col gap-6 relative z-10">
 
         {/* Navbar */}
-        <nav className="w-full sticky top-0 z-40 bg-black/60 backdrop-blur-2xl border-b border-white/8 shadow-[0_1px_0_rgba(255,255,255,0.04),0_4px_24px_rgba(0,0,0,0.4)]">
+        <nav className="w-full sticky top-0 z-40 bg-black/80
+          backdrop-blur-2xl border-b border-white/[0.06]">
           <div className="max-w-md mx-auto px-4 py-4 flex items-center justify-between">
             <span className="text-white font-semibold tracking-tight text-lg">
-              VaultX
+              Vault<span className="text-[#FF6B35]">X</span>
             </span>
             <div className="flex gap-4">
               <Link href="/admin" className="text-xs hover:opacity-70 text-white/40 transition-opacity">
@@ -409,7 +428,7 @@ export default function PayView() {
         </nav>
 
         {!paramsValid && (
-          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 text-white/60 text-sm">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 text-white/60 text-sm">
             This page needs valid query parameters:{" "}
             <code className="text-white">to, amt, name</code>. Use the{" "}
             <Link href="/admin" className="underline text-white/80">
@@ -423,17 +442,19 @@ export default function PayView() {
           <>
             {/* Main Glass Card */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 flex flex-col gap-5"
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-2xl saturate-150 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] p-6 sm:p-8 flex flex-col gap-5 relative overflow-hidden"
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
             >
               {/* Inner sheen */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-60 rounded-2xl" />
+              <div className="pointer-events-none absolute inset-0
+                bg-gradient-to-br from-[#FF6B35]/[0.04]
+                via-transparent to-transparent rounded-2xl" />
 
               {/* Payment info */}
               <div className="relative z-10">
-                <p className="text-white/40 text-xs uppercase tracking-wider mb-1">
+                <p className="text-sm font-semibold tracking-tight mb-1">
                   Payment
                 </p>
                 <p className="text-white text-xl sm:text-2xl font-semibold tracking-tight"
@@ -450,7 +471,7 @@ export default function PayView() {
                   </p>
                 )}
                 {!rateLoading && ngnValue !== null && (
-                  <p className="text-white/40 text-sm sm:text-base mt-1">
+                  <p className="text-[#FF6B35]/70 text-sm sm:text-base mt-1">
                     ≈ ₦{ngnValue.toLocaleString("en-NG", { maximumFractionDigits: 2 })}
                   </p>
                 )}
@@ -459,10 +480,11 @@ export default function PayView() {
                     Live rate unavailable
                   </p>
                 )}
-                <p className="text-white/30 text-xs mt-2 font-mono break-all">
+                <p className="text-white/25 font-mono text-sm mt-2 break-all">
                   To {destinationKey?.toBase58()}
                 </p>
-                <p className="text-white/20 text-xs mt-1 tracking-widest uppercase">
+                <p className="text-[#FF6B35]/30 text-xs mt-1
+                  tracking-widest uppercase">
                   Don&apos;t trust — verify
                 </p>
               </div>
@@ -529,18 +551,27 @@ export default function PayView() {
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.97 }}
-                          transition={{ duration: 0.15 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 17 }}
                           onClick={() => { setPaymentMode("sol"); setConfirmStage("idle"); setHasAddedEntry(false); }}
-                          className="w-full py-3 sm:py-4 rounded-xl bg-white/10 border border-white/20 text-white text-sm sm:text-base font-medium shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+                          className="w-full py-3 sm:py-4 rounded-xl
+                            bg-[#FF6B35]/10 border border-[#FF6B35]/30
+                            text-[#FF6B35] text-sm sm:text-base font-semibold
+                            hover:bg-[#FF6B35]/20 hover:border-[#FF6B35]/50
+                            hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]
+                            transition-all duration-200"
                         >
                           Pay with SOL
                         </motion.button>
                         <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.97 }}
-                          transition={{ duration: 0.15 }}
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.98 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
                           onClick={() => { setPaymentMode("naira"); setConfirmStage("idle"); setHasAddedEntry(false); }}
-                          className="w-full py-3 sm:py-4 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm sm:text-base font-medium hover:text-white transition-colors duration-200"
+                          className="w-full py-3 sm:py-4 rounded-xl
+                            bg-white/[0.06] border border-white/[0.10]
+                            text-white/60 text-sm sm:text-base font-medium
+                            hover:bg-white/[0.10] hover:text-white hover:border-white/20
+                            transition-all duration-200"
                         >
                           Pay with Naira (Bank Transfer)
                         </motion.button>
@@ -557,7 +588,13 @@ export default function PayView() {
                           required
                           value={matric}
                           onChange={(e) => setMatric(e.target.value)}
-                          className="w-full rounded-xl px-4 py-3 text-sm outline-none focus:ring-1 border border-white/10 bg-white/5 text-white placeholder:text-white/30 transition-colors"
+                          className="w-full rounded-xl px-4 py-3 text-sm
+                            outline-none border border-white/[0.08]
+                            bg-white/[0.04] text-white
+                            placeholder:text-white/25
+                            focus:border-[#FF6B35]/40
+                            focus:shadow-[0_0_0_3px_rgba(255,107,53,0.08)]
+                            transition-all duration-200"
                           placeholder="Enter your matriculation number"
                         />
                         {payError && (
@@ -569,11 +606,17 @@ export default function PayView() {
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.97 }}
-                          transition={{ duration: 0.15 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 17 }}
                           type="button"
                           disabled={paying}
                           onClick={() => void handlePay()}
-                          className="w-full py-3 sm:py-4 rounded-xl bg-white/10 border border-white/20 text-white text-sm sm:text-base font-medium transition-all duration-200 shadow-[0_0_20px_rgba(255,255,255,0.05)] disabled:cursor-not-allowed disabled:opacity-50"
+                          className="w-full py-3 sm:py-4 rounded-xl
+                            bg-[#FF6B35]/10 border border-[#FF6B35]/30
+                            text-[#FF6B35] text-sm sm:text-base font-semibold
+                            hover:bg-[#FF6B35]/20 hover:border-[#FF6B35]/50
+                            hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]
+                            transition-all duration-200
+                            shadow-[0_0_20px_rgba(255,107,53,0.15)] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           {paying ? (
                             <span className="flex items-center justify-center gap-2">
@@ -614,10 +657,15 @@ export default function PayView() {
                             <motion.button
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.97 }}
-                              transition={{ duration: 0.15 }}
+                              transition={{ type: "spring", stiffness: 400, damping: 17 }}
                               onClick={handleFetchBankDetails}
                               disabled={!matric.trim()}
-                              className="w-full py-3 rounded-xl font-medium transition-all duration-200 border border-white/20 bg-white/10 text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-full py-3 rounded-xl font-semibold
+                                transition-all duration-200
+                                bg-[#FF6B35]/10 border border-[#FF6B35]/30
+                                text-[#FF6B35] hover:bg-[#FF6B35]/20
+                                hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]
+                                disabled:opacity-30 disabled:cursor-not-allowed"
                             >
                               Continue to Bank Transfer
                             </motion.button>
@@ -627,7 +675,9 @@ export default function PayView() {
                             <p className="text-white/40 text-xs text-center">
                               Transfer the exact amount below to complete your payment
                             </p>
-                            <div className="rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 space-y-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                            <div className="rounded-xl border border-[#FF6B35]/10
+                              bg-[#FF6B35]/[0.03] backdrop-blur-xl p-4 space-y-3
+                              shadow-[inset_0_1px_0_rgba(255,107,53,0.05)]">
                               <div className="flex justify-between items-center border-b border-white/5 py-3 gap-4">
                                 <span className="text-white/40 text-xs sm:text-sm shrink-0">Bank</span>
                                 <span className="text-white text-xs sm:text-sm font-medium text-right break-all">{bankDetails.bankName}</span>
@@ -651,7 +701,7 @@ export default function PayView() {
                             <motion.button
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.97 }}
-                              transition={{ duration: 0.15 }}
+                              transition={{ type: "spring", stiffness: 400, damping: 17 }}
                               onClick={() => {
                                 setConfirmStage("verified");
                                 setShowSuccess(true);
@@ -674,29 +724,13 @@ export default function PayView() {
                                 setLedger((prev) => [localEntry, ...prev]);
                                 setHasAddedEntry(true);
                               }}
-                              className="w-full py-3 rounded-xl font-medium transition-all duration-200 border border-white/10 bg-white/5 text-white shadow-[0_0_20px_rgba(255,255,255,0.04)]"
+                              className="w-full py-3 rounded-xl font-semibold
+                                transition-all duration-200 border border-[#FF6B35]/30
+                                bg-[#FF6B35]/10 text-[#FF6B35] hover:bg-[#FF6B35]/20
+                                hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]"
                             >
                               I&apos;ve Paid
                             </motion.button>
-                          </div>
-                        )}
-
-                        {confirmStage === "confirming" && (
-                          <div className="animate-fade-in mt-4 text-center space-y-3 px-2">
-                            <div className="text-3xl sm:text-4xl font-mono text-white/80">{countdown}</div>
-                            <p className="text-sm sm:text-base text-white/40">Checking for payment...</p>
-                            <div className="w-full bg-white/5 rounded-full h-1 mt-2"></div>
-                          </div>
-                        )}
-                        {confirmStage === "failed" && (
-                          <div className="text-center flex flex-col gap-2">
-                            <p className="text-red-400 text-sm">Payment not detected in time.</p>
-                            <button
-                              onClick={() => { setConfirmStage("idle"); setHasAddedEntry(false); }}
-                              className="text-xs hover:opacity-70 transition-colors underline underline-offset-2 text-white/40"
-                            >
-                              Try again
-                            </button>
                           </div>
                         )}
 
@@ -715,10 +749,13 @@ export default function PayView() {
 
             {/* Glass Pocket */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
-              className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-2xl saturate-150 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] overflow-hidden relative"
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+              className="w-full rounded-2xl border border-white/[0.08]
+                bg-white/[0.04] backdrop-blur-2xl saturate-150
+                shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]
+                overflow-hidden relative"
             >
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-transparent opacity-50 rounded-2xl" />
               <div className="relative z-10">
@@ -727,38 +764,16 @@ export default function PayView() {
                     <h3 className="text-white/60 text-xs uppercase tracking-wider">
                       Glass Pocket
                     </h3>
-                    <span className="text-white/30 text-xs font-mono">
+                    <span className="text-[#FF6B35]/50 text-xs font-mono">
                       {ledger.filter(e => !e.isNaira).length} verified{" "}
                       {ledger.filter(e => !e.isNaira).length === 1 ? "payment" : "payments"}
                     </span>
                   </div>
                 </div>
 
-                {ledgerLoading && ledger.length === 0 && (
-                  <div className="px-4 py-6 text-center">
-                    <p className="text-white/30 text-xs animate-pulse">Loading transactions...</p>
-                  </div>
-                )}
-                {!ledgerLoading && ledgerError && (
-                  <div className="px-4 py-6 text-center">
-                    <p className="text-red-400/50 text-xs">Could not load ledger. Retrying...</p>
-                  </div>
-                )}
-                {!ledgerLoading && !ledgerError && ledger.length === 0 && (
-                  <div className="px-4 py-6 text-center">
-                    <p className="text-white/20 text-xs">No transactions yet.</p>
-                  </div>
-                )}
                 {ledger.length > 0 && (
                   <div className="overflow-x-auto">
                     <table className="w-full min-w-[300px] text-sm">
-                      <thead>
-                        <tr className="border-b border-white/5">
-                          <th className="text-white/40 text-xs uppercase tracking-wider text-left px-4 py-3">Matric</th>
-                          <th className="text-white/40 text-xs uppercase tracking-wider text-left px-4 py-3">Time</th>
-                          <th className="text-white/40 text-xs uppercase tracking-wider text-left px-4 py-3">Tx</th>
-                        </tr>
-                      </thead>
                       <tbody>
                         {ledger.map((entry) => (
                           <motion.tr
@@ -774,12 +789,6 @@ export default function PayView() {
                                 <span className="text-white/30 text-xs ml-1">₦</span>
                               )}
                             </td>
-                            <td
-                              className="px-4 py-3 text-white/50 text-xs sm:text-sm"
-                              title={entry.blockTime ? new Date(entry.blockTime * 1000).toLocaleString("en-NG", { timeZone: "Africa/Lagos" }) : ""}
-                            >
-                              {entry.blockTime ? timeAgo(entry.blockTime) : "—"}
-                            </td>
                             <td className="px-4 py-3">
                               {entry.isNaira ? (
                                 <span className="text-white/20 text-xs font-mono">pending</span>
@@ -788,7 +797,9 @@ export default function PayView() {
                                   href={"https://explorer.solana.com/tx/" + entry.signature + "?cluster=devnet"}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-white/40 hover:text-white text-xs font-mono underline underline-offset-2 transition-colors duration-150"
+                                  className="text-[#FF6B35]/50 hover:text-[#FF6B35]
+                                    text-xs font-mono underline underline-offset-2
+                                    transition-colors duration-150"
                                 >
                                   <span className="hidden sm:inline">{entry.signature.slice(0, 8)}…</span>
                                   <span className="sm:hidden">{entry.signature.slice(0, 6)}…</span>
@@ -806,16 +817,23 @@ export default function PayView() {
 
             {/* Vault Balance */}
             {vaultBalance !== null && (
-              <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl px-4 py-3">
-                <span className="text-white/40 text-xs uppercase tracking-wider">Vault Balance</span>
-                <span className="text-white font-mono text-sm font-medium">
+              <motion.div
+                className="flex items-center justify-between rounded-xl
+                  border border-[#FF6B35]/15 bg-[#FF6B35]/[0.04]
+                  backdrop-blur-xl px-4 py-3"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.25 }}
+              >
+                <span className="text-[#FF6B35]/50 text-xs uppercase tracking-wider">Vault Balance</span>
+                <span className="text-[#FF6B35] font-mono text-sm font-bold">
                   {vaultBalance.toFixed(4)} SOL
                 </span>
-              </div>
+              </motion.div>
             )}
 
             {/* Footer */}
-            <p className="text-white/10 text-xs text-center pb-4">
+            <p className="text-[#FF6B35]/20 text-xs text-center pb-4">
               Powered by Solana · Built at Federal University Lokoja
             </p>
           </>
