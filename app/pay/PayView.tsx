@@ -114,6 +114,7 @@ export default function PayView() {
   } | null>(null);
   const [confirmStage, setConfirmStage] = useState<"idle" | "confirming" | "verified" | "failed">("idle");
   const [countdown] = useState(0);
+  const [vaultBalance, setVaultBalance] = useState<number | null>(null);
 
 
   const fetchNgnRate = useCallback(async (solAmount: number) => {
@@ -315,6 +316,13 @@ export default function PayView() {
     const interval = setInterval(fetchLedger, 10000);
     return () => clearInterval(interval);
   }, [fetchLedger]);
+
+  useEffect(() => {
+    if (!destinationKey) return
+    connection.getBalance(destinationKey).then(lamports => {
+      setVaultBalance(lamports / LAMPORTS_PER_SOL)
+    }).catch(() => setVaultBalance(null))
+  }, [destinationKey, connection]);
 
   async function handlePay() {
     if (!publicKey) {
