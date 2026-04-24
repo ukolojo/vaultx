@@ -125,6 +125,49 @@ body {
     opacity: 1;
     animation: border-trace 2s ease infinite;
   }
+
+  @keyframes split-top {
+    from {
+      opacity: 0;
+      transform: translateY(-30px) skewY(-2deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) skewY(0deg);
+    }
+  }
+  @keyframes split-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(30px) skewY(2deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) skewY(0deg);
+    }
+  }
+  .reveal-top {
+    opacity: 0;
+    animation: split-top 0.8s cubic-bezier(0.16,1,0.3,1)
+      0.3s forwards;
+  }
+  .reveal-bottom {
+    opacity: 0;
+    animation: split-bottom 0.8s cubic-bezier(0.16,1,0.3,1)
+      0.5s forwards;
+  }
+  .reveal-fade {
+    opacity: 0;
+    animation: fade-in 0.8s ease 0.7s forwards;
+  }
+  .reveal-fade-2 {
+    opacity: 0;
+    animation: fade-in 0.8s ease 0.9s forwards;
+  }
+  .reveal-fade-3 {
+    opacity: 0;
+    animation: fade-in 0.8s ease 1.1s forwards;
+  }
 }
 
 .wallet-adapter-button {

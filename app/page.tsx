@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import TorusKnot from "@/components/TorusKnot";
 import BlockCounter from "@/components/BlockCounter";
+import ScrambleText from "@/components/ScrambleText";
+import WordFade from "@/components/WordFade";
+import RevealOnScroll from "@/components/RevealOnScroll";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -62,7 +65,11 @@ export default function Home() {
                 (scrolled ? "text-base" : "text-xl")
               }
             >
-              Vault<span className="text-[#FF6B35]">X</span>
+              <ScrambleText
+                text="VAULTX"
+                trigger="hover"
+                className="text-white"
+              />
             </span>
           </div>
           <div className="flex items-center gap-6">
@@ -100,9 +107,9 @@ export default function Home() {
           items-center text-center gap-8 animate-fade-in
           relative">
           <TorusKnot />
-          <div className="relative z-10 flex flex-col items-center gap-4">
-            <div className="inline-flex items-center gap-2 
-              px-3 py-1.5 rounded-full 
+          <div className="relative z-10 flex flex-col items-center gap-4 reveal-top">
+            <div className="inline-flex items-center gap-2
+              px-3 py-1.5 rounded-full
               bg-[#FF6B35]/10 border border-[#FF6B35]/20">
               <span className="w-1.5 h-1.5 rounded-full 
                 bg-[#FF6B35] animate-orange-pulse" />
@@ -111,26 +118,28 @@ export default function Home() {
                 Solana · Devnet · Live
               </span>
             </div>
-            <h1 className="text-6xl sm:text-7xl font-bold 
-              tracking-tight leading-none">
-              Vault<span className="text-[#FF6B35]">X</span>
+            <h1 className="text-6xl sm:text-7xl font-bold
+              tracking-tight leading-none reveal-top">
+              <ScrambleText
+                text="VAULTX"
+                className="text-white"
+                trigger="mount"
+              />
             </h1>
             <p className="text-xs text-white/20 tracking-[0.3em]
-              uppercase overflow-hidden">
+              uppercase overflow-hidden reveal-fade">
               <span className="typewriter">
                 Don&apos;t trust — verify
               </span>
             </p>
           </div>
-          <p className="relative z-10 text-white/50 text-base sm:text-lg
-            leading-relaxed max-w-lg">
-            A transparency-first payment gateway for campus 
-            financial collections. Every transaction recorded 
-            permanently on-chain — visible to anyone, 
-            controlled by no one.
-          </p>
+          <WordFade
+            text="A transparency-first payment gateway for campus financial collections. Every transaction recorded permanently on-chain — visible to anyone, controlled by no one."
+            className="text-white/50 text-base sm:text-lg leading-relaxed max-w-lg reveal-bottom"
+            delay={0.9}
+          />
           <div className="relative z-10 flex flex-col sm:flex-row gap-3
-            w-full sm:w-auto">
+            w-full sm:w-auto reveal-fade-2">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
@@ -168,8 +177,9 @@ export default function Home() {
         </div>
 
         {/* Stats */}
-        <section className="w-full max-w-sm 
-          grid grid-cols-3 gap-3">
+        <RevealOnScroll direction="up" delay={0}>
+          <section className="w-full max-w-sm
+            grid grid-cols-3 gap-3">
           {[
             { val: "0ms", lbl: "Server delay" },
             { val: "∞", lbl: "Audit trail" },
@@ -191,6 +201,7 @@ export default function Home() {
             </motion.div>
           ))}
         </section>
+        </RevealOnScroll>
 
         {/* How It Works */}
         <section className="w-full max-w-4xl">
@@ -229,25 +240,25 @@ export default function Home() {
                 body: "Anyone views real-time history — no login, no permission, no trust required.",
               },
             ].map((item, index) => (
-              <motion.div
-                key={item.step}
-                className="glow-border rounded-2xl border border-white/[0.06]
-                bg-white/[0.03] backdrop-blur-xl p-6
-                flex flex-col gap-4 group
-                hover:border-[#FF6B35]/20
-                hover:bg-[#FF6B35]/[0.03]
-                hover:shadow-[0_0_20px_rgba(255,107,53,0.06)]
-                transition-all duration-300"
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02, y: -2 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.08,
-                  hover: { type: "spring", stiffness: 300, damping: 20 }
-                }}
-              >
+              <RevealOnScroll key={item.step} direction="up" delay={index * 0.1}>
+                <motion.div
+                  className="glow-border rounded-2xl border border-white/[0.06]
+                  bg-white/[0.03] backdrop-blur-xl p-6
+                  flex flex-col gap-4 group
+                  hover:border-[#FF6B35]/20
+                  hover:bg-[#FF6B35]/[0.03]
+                  hover:shadow-[0_0_20px_rgba(255,107,53,0.06)]
+                  transition-all duration-300"
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.08,
+                    hover: { type: "spring", stiffness: 300, damping: 20 }
+                  }}
+                >
                 <span className="text-[#FF6B35]/50 font-mono 
                   text-xs font-bold">
                   {item.step}
@@ -264,18 +275,20 @@ export default function Home() {
                   </p>
                 </div>
               </motion.div>
+              </RevealOnScroll>
             ))}
           </div>
         </section>
 
         {/* Glass Box Principle */}
-        <motion.section
-          className="w-full max-w-2xl"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-        >
+        <RevealOnScroll direction="up" delay={0}>
+          <motion.section
+            className="w-full max-w-2xl"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+          >
           <div className="glow-border rounded-2xl border border-white/[0.08]
             bg-white/[0.03] backdrop-blur-2xl p-8
             flex flex-col gap-6 relative overflow-hidden">
@@ -336,6 +349,7 @@ export default function Home() {
             </div>
           </div>
         </motion.section>
+        </RevealOnScroll>
 
       </motion.main>
 

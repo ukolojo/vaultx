@@ -793,12 +793,12 @@ export default function PayView() {
                   <div className="overflow-x-auto">
                     <table className="w-full min-w-[300px] text-sm">
                       <tbody>
-                        {ledger.map((entry) => (
+                        {ledger.map((entry, index) => (
                           <motion.tr
                             key={entry.signature}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
                             className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
                           >
                             <td className="px-4 py-3 text-white/80 font-mono text-xs sm:text-sm">
