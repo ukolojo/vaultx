@@ -61,21 +61,31 @@ export default function AdminPage() {
       <div className="w-full max-w-md mx-auto flex flex-col gap-6">
 
         {/* Navbar */}
-        <nav className="w-full sticky top-0 z-40 bg-black/80
-          backdrop-blur-2xl border-b border-white/[0.06]">
+        <motion.nav
+          className="w-full sticky top-0 z-40 bg-white/[0.04]
+            backdrop-blur-2xl border-b border-white/[0.08]
+            hover:bg-white/[0.06] transition-all duration-300"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
           <div className="max-w-md mx-auto px-4 py-4 flex
             items-center justify-between">
-            <span className="text-white font-bold tracking-tight
-              text-lg">
-              Vault<span className="text-[#FF6B35]">X</span>
-            </span>
+            <Link href="/" className="group">
+              <span className="text-white font-bold tracking-tight
+                text-lg group-hover:text-white/90 transition-colors duration-200">
+                Vault<span className="text-[#FF6B35] group-hover:text-[#FF6B35]/80">X</span>
+              </span>
+            </Link>
             <Link href="/"
-              className="text-xs text-white/40 hover:text-white
-              transition-colors duration-200">
+              className="text-xs text-white/40 hover:text-[#FF6B35]
+              hover:bg-[#FF6B35]/10 px-3 py-1.5 rounded-lg
+              transition-all duration-200
+              hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]">
               Home →
             </Link>
           </div>
-        </nav>
+        </motion.nav>
 
         {/* Admin title */}
         <div className="text-center">

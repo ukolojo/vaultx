@@ -28,9 +28,10 @@ export default function Home() {
 
       {/* Navbar */}
       <motion.nav
-        className="w-full sticky top-0 z-40 
-          bg-black/80 backdrop-blur-2xl 
-          border-b border-white/[0.06]"
+        className="w-full sticky top-0 z-40
+          bg-white/[0.04] backdrop-blur-2xl
+          border-b border-white/[0.08]
+          hover:bg-white/[0.06] transition-all duration-300"
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
@@ -38,22 +39,30 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 py-4 
           flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-white font-bold 
-              tracking-tight text-xl">
-              Vault<span className="text-[#FF6B35]">X</span>
-            </span>
+            <Link href="/" className="group">
+              <span className="text-white font-bold
+                tracking-tight text-xl group-hover:text-white/90
+                transition-colors duration-200">
+                Vault<span className="text-[#FF6B35] group-hover:text-[#FF6B35]/80">X</span>
+              </span>
+            </Link>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/admin"
-              className="text-xs text-white/40 
-              hover:text-white transition-colors duration-200">
+              className="text-xs text-white/40
+              hover:text-[#FF6B35] hover:bg-[#FF6B35]/10
+              px-3 py-1.5 rounded-lg transition-all duration-200
+              hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]">
               Admin
             </Link>
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full 
-                bg-[#FF6B35] 
-                shadow-[0_0_6px_rgba(255,107,53,0.8)]" />
-              <span className="text-xs text-[#FF6B35]/60">
+            <div className="flex items-center gap-2 px-3 py-1.5
+              rounded-lg bg-[#FF6B35]/10 border border-[#FF6B35]/20
+              hover:bg-[#FF6B35]/20 transition-all duration-200">
+              <span className="w-1.5 h-1.5 rounded-full
+                bg-[#FF6B35]
+                shadow-[0_0_6px_rgba(255,107,53,0.8)]
+                animate-orange-pulse" />
+              <span className="text-xs text-[#FF6B35]/80">
                 Devnet
               </span>
             </div>
@@ -199,14 +208,19 @@ export default function Home() {
                 className="rounded-2xl border border-white/[0.06] 
                 bg-white/[0.03] backdrop-blur-xl p-6 
                 flex flex-col gap-4 group
-                hover:border-[#FF6B35]/20 
+                hover:border-[#FF6B35]/20
                 hover:bg-[#FF6B35]/[0.03]
                 hover:shadow-[0_0_20px_rgba(255,107,53,0.06)]
                 transition-all duration-300"
                 initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.08,
+                  hover: { type: "spring", stiffness: 300, damping: 20 }
+                }}
               >
                 <span className="text-[#FF6B35]/50 font-mono 
                   text-xs font-bold">
@@ -271,10 +285,17 @@ export default function Home() {
                   { label: "No Backend", 
                     desc: "Solana is the only source of truth." },
                 ].map(item => (
-                  <div key={item.label}
-                    className="rounded-xl border 
-                    border-[#FF6B35]/10 bg-[#FF6B35]/[0.03] 
-                    p-4 flex flex-col gap-2">
+                  <motion.div
+                    key={item.label}
+                    className="rounded-xl border
+                    border-[#FF6B35]/10 bg-[#FF6B35]/[0.03]
+                    p-4 flex flex-col gap-2 cursor-pointer
+                    hover:border-[#FF6B35]/30 hover:bg-[#FF6B35]/[0.08]
+                    hover:shadow-[0_0_15px_rgba(255,107,53,0.1)]
+                    transition-all duration-300"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
                     <p className="text-[#FF6B35]/70 text-xs 
                       font-semibold">
                       {item.label}
@@ -283,7 +304,7 @@ export default function Home() {
                       leading-relaxed">
                       {item.desc}
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -293,13 +314,17 @@ export default function Home() {
       </motion.main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-white/[0.05] 
+      <footer className="w-full border-t border-white/[0.08]
+        bg-white/[0.02] backdrop-blur-xl
         px-6 py-8 relative z-10">
-        <div className="max-w-5xl mx-auto flex flex-col 
+        <div className="max-w-5xl mx-auto flex flex-col
           sm:flex-row items-center justify-between gap-4">
-          <span className="text-white font-bold text-base">
-            Vault<span className="text-[#FF6B35]">X</span>
-          </span>
+          <Link href="/" className="group">
+            <span className="text-white font-bold text-base
+              group-hover:text-white/90 transition-colors duration-200">
+              Vault<span className="text-[#FF6B35] group-hover:text-[#FF6B35]/80">X</span>
+            </span>
+          </Link>
           <p className="text-white/20 text-xs">
             Federal University Lokoja · Computer Science · 2024/25
           </p>
