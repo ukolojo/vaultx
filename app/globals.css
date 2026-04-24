@@ -77,6 +77,13 @@ body {
       cursor-blink 0.8s step-end 0.5s 6;
     border-right: 2px solid rgba(255,107,53,0.8);
   }
+
+  .tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out,
+      box-shadow 0.1s ease-out;
+    will-change: transform;
+  }
 }
 
 .wallet-adapter-button {

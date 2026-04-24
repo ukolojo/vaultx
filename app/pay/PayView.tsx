@@ -14,6 +14,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import TiltCard from "@/components/TiltCard";
 
 
 const WalletMultiButton = dynamic(
@@ -456,12 +457,13 @@ export default function PayView() {
         {paramsValid && (
           <>
             {/* Main Glass Card */}
-            <motion.div
-              className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 flex flex-col gap-5"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-            >
+            <TiltCard className="w-full">
+              <motion.div
+                className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-6 flex flex-col gap-5"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+              >
               {/* Inner sheen */}
               <div className="pointer-events-none absolute inset-0
                 bg-gradient-to-br from-[#FF6B35]/[0.04]
@@ -760,7 +762,8 @@ export default function PayView() {
                   </div>
                 )}
               </div>
-            </motion.div>
+              </motion.div>
+            </TiltCard>
 
             {/* Glass Pocket */}
             <motion.div
