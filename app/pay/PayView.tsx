@@ -365,6 +365,17 @@ export default function PayView() {
   };
 
   return (
-    <div>Hello</div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="w-full rounded-2xl border border-white/10
+      bg-white/5 backdrop-blur-2xl saturate-150
+      shadow-[0_8px_32px_0_rgba(0,0,0,0.4)]
+      p-6 sm:p-8 flex flex-col gap-5
+      relative overflow-hidden"
+    >
+      Hello
+    </motion.div>
   );
 }
