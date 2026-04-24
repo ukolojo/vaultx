@@ -50,18 +50,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div
-      className="min-h-screen text-vaultx-white px-4 py-12"
-      style={{
-        background: `
-          radial-gradient(ellipse at 20% 20%,
-            rgba(255,255,255,0.03) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 80%,
-            rgba(255,255,255,0.02) 0%, transparent 50%),
-          #000000
-        `
-      }}
-    >
+    <div className="min-h-screen bg-black text-vaultx-white px-4 py-12">
       <div className="mx-auto max-w-lg space-y-8">
         <header className="space-y-2">
           <p className="text-sm uppercase tracking-[0.2em] text-white/50">

@@ -5,26 +5,25 @@
 body {
   background-color: #000000;
   color: #ffffff;
-  color: var(--vaultx-fg);
-  background: var(--vaultx-bg);
   font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer utilities {
   .vaultx-glass {
-    border: 1px solid var(--vaultx-glass-border);
-    background: var(--vaultx-glass-bg);
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
   }
 
   .vaultx-btn-primary {
-    transition: box-shadow 175ms ease, transform 175ms ease, opacity 175ms ease;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+    transition: box-shadow 175ms ease, transform 175ms ease, 
+      opacity 175ms ease;
+    box-shadow: 0 0 20px rgba(255,255,255,0.08);
   }
 
   .vaultx-btn-primary:hover:not(:disabled) {
-    box-shadow: 0 0 28px rgba(255, 255, 255, 0.14);
+    box-shadow: 0 0 28px rgba(255,255,255,0.14);
   }
 
   .vaultx-transition {
@@ -32,44 +31,44 @@ body {
       box-shadow 175ms ease, color 175ms ease, opacity 175ms ease;
   }
 
-  @keyframes fade-in-up {
+  /* Toast notification — keeps translate(-50%) for centering */
+  @keyframes fade-in-up-toast {
     from { opacity: 0; transform: translate(-50%, 12px); }
     to   { opacity: 1; transform: translate(-50%, 0); }
   }
   .animate-fade-in-up {
-    animation: fade-in-up 0.25s ease-out forwards;
+    animation: fade-in-up-toast 0.25s ease-out forwards;
   }
 
+  /* General fade in for cards and content */
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   .animate-fade-in {
-    animation: fade-in 0.2s ease-out forwards;
+    animation: fade-in 0.3s ease-out forwards;
   }
 
+  /* Glow pulse for success state */
   @keyframes pulse-glow {
     0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.05); }
     50%       { box-shadow: 0 0 40px rgba(255,255,255,0.12); }
   }
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Shimmer for SOL amount */
   @keyframes shimmer {
     0%   { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-6px); }
-  }
-
-  .animate-pulse-glow  { animation: pulse-glow 3s ease-in-out infinite; }
-  .animate-float       { animation: float 4s ease-in-out infinite; }
-
   .shimmer-text {
     background: linear-gradient(
       90deg,
-      rgba(255,255,255,0.4) 0%,
+      rgba(255,255,255,0.5) 0%,
       rgba(255,255,255,1) 40%,
-      rgba(255,255,255,0.4) 100%
+      rgba(255,255,255,0.5) 100%
     );
     background-size: 200% auto;
     -webkit-background-clip: text;
@@ -78,48 +77,17 @@ body {
     animation: shimmer 3s linear infinite;
   }
 
-  .glass-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-radius: 1.25rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  /* Float for logo */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-4px); }
   }
-  .glass-card:hover {
-    border-color: rgba(255,255,255,0.14);
-    box-shadow: 0 0 40px rgba(255,255,255,0.04);
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
   }
-
-  .btn-primary {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.16);
-    color: white;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255,255,255,0.1) 0%,
-      transparent 60%
-    );
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-  .btn-primary:hover::after { opacity: 1; }
-  .btn-primary:hover {
-    background: rgba(255,255,255,0.12);
-    box-shadow: 0 0 30px rgba(255,255,255,0.08);
-    transform: translateY(-1px);
-  }
-  .btn-primary:active { transform: translateY(0); }
 }
 
+/* Wallet adapter overrides */
 .wallet-adapter-button {
   background: rgba(255,255,255,0.06) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;

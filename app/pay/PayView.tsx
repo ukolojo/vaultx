@@ -361,18 +361,7 @@ export default function PayView() {
   }
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-start px-4 py-8 sm:py-12"
-      style={{
-        background: `
-          radial-gradient(ellipse at 20% 20%,
-            rgba(255,255,255,0.03) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 80%,
-            rgba(255,255,255,0.02) 0%, transparent 50%),
-          #000000
-        `
-      }}
-    >
+    <div className="min-h-screen bg-black flex flex-col items-center justify-start px-4 py-8 sm:py-12">
       {showSuccess && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm flex items-center gap-3 px-5 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
           <div className="w-2 h-2 rounded-full bg-green-400" />
