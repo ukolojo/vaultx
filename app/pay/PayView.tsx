@@ -361,7 +361,7 @@ export default function PayView() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-start px-4 py-8 sm:py-12">
+    <div className="min-h-screen bg-black px-4 py-8 sm:py-12">
       {showSuccess && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm flex items-center gap-3 px-5 py-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
           <div className="w-2 h-2 rounded-full bg-green-400" />
@@ -371,18 +371,11 @@ export default function PayView() {
         </div>
       )}
 
-      <div className="max-w-md mx-auto flex flex-col gap-6">
+      <div className="w-full max-w-md mx-auto flex flex-col gap-6">
         {/* Navbar */}
-        <nav
-          className="w-full sticky top-0 z-40 backdrop-blur-xl"
-          style={{
-            background: 'rgba(0,0,0,0.6)',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            boxShadow: '0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.4)'
-          }}
-        >
+        <nav className="w-full sticky top-0 z-40 backdrop-blur-xl border-b border-white/10 bg-black/80">
           <div className="max-w-md mx-auto px-4 py-4 flex items-center justify-between">
-            <span className="text-white font-semibold tracking-tight text-lg animate-float inline-block">
+            <span className="text-white font-semibold tracking-tight text-lg">
               VaultX
             </span>
             <div className="flex gap-4">
@@ -416,16 +409,9 @@ export default function PayView() {
         {paramsValid && (
           <>
             {/* Main Glass Card */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 sm:p-8 flex flex-col gap-5 animate-fade-in-up">
+            <div className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8 flex flex-col gap-5">
               {/* Payment info */}
-              <div
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.02), transparent)',
-                  borderRadius: '0.75rem',
-                  padding: '1rem',
-                  marginBottom: '0.5rem'
-                }}
-              >
+              <div>
                 <p className="text-white/40 text-xs uppercase tracking-wider mb-1">
                   Payment
                 </p>
@@ -433,7 +419,7 @@ export default function PayView() {
                   {name}
                 </p>
                 <p className="text-white text-3xl sm:text-4xl font-bold mt-1">
-                  <span className="shimmer-text">{amountSol} SOL</span>
+                  {amountSol} SOL
                 </p>
                 {rateLoading && (
                   <p className="text-white/30 text-xs animate-pulse mt-1">
@@ -461,7 +447,7 @@ export default function PayView() {
               {/* Payment form or success */}
               {hasPaid ? (
                 <div className="animate-fade-in flex flex-col items-center gap-5 py-4 text-center">
-                  <div className="w-16 h-16 rounded-full border border-green-400/30 bg-green-400/10 flex items-center justify-center shadow-[0_0_30px_rgba(74,222,128,0.15)] animate-pulse-glow">
+                  <div className="w-16 h-16 rounded-full border border-green-400/30 bg-green-400/10 flex items-center justify-center">
                     <svg
                       width="32"
                       height="32"
@@ -537,8 +523,7 @@ export default function PayView() {
                           setPaymentMode("sol");
                           setConfirmStage("idle");
                         }}
-                        style={{ animationDelay: '0.1s' }}
-                        className="w-full py-3 sm:py-4 rounded-xl bg-white/10 border border-white/20 text-white text-sm sm:text-base font-medium hover:bg-white/15 transition-all duration-200 shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] animate-fade-in-up opacity-0"
+                        className="w-full py-3 sm:py-4 rounded-xl bg-white/10 border border-white/20 text-white text-sm sm:text-base font-medium hover:bg-white/15 transition-all duration-200"
                       >
                         Pay with SOL
                       </button>
@@ -547,8 +532,7 @@ export default function PayView() {
                           setPaymentMode("naira");
                           setConfirmStage("idle");
                         }}
-                        style={{ animationDelay: '0.2s' }}
-                        className="w-full py-3 sm:py-4 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm sm:text-base font-medium hover:bg-white/10 hover:text-white transition-all duration-200 animate-fade-in-up opacity-0"
+                        className="w-full py-3 sm:py-4 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm sm:text-base font-medium hover:bg-white/10 hover:text-white transition-all duration-200"
                       >
                         Pay with Naira (Bank Transfer)
                       </button>
@@ -744,13 +728,7 @@ export default function PayView() {
             </div>
 
             {/* Glass Pocket */}
-            <div
-              className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden"
-              style={{
-                borderTop: '1px solid rgba(255,255,255,0.15)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)'
-              }}
-            >
+            <div className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
               <div className="px-4 py-3 border-b border-white/5">
                 <h3 className="text-white/60 text-xs uppercase tracking-wider">
                   Glass Pocket — Live Ledger
@@ -799,7 +777,7 @@ export default function PayView() {
                       {ledger.map((entry) => (
                         <tr
                           key={entry.signature}
-                          className="border-b border-white/5 hover:bg-white/5 hover:-translate-y-px hover:shadow-[0_4px_20px_rgba(255,255,255,0.04)] transition-all duration-200"
+                          className="border-b border-white/5 hover:bg-white/5 transition-colors duration-150"
                         >
                           <td className="px-4 py-3 text-white/80 font-mono text-xs sm:text-sm">
                             {entry.matric}

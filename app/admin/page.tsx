@@ -50,30 +50,27 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-vaultx-white px-4 py-12">
-      <div className="mx-auto max-w-lg space-y-8">
-        <header className="space-y-2">
-          <p className="text-sm uppercase tracking-[0.2em] text-white/50">
-            VaultX
-          </p>
-          <h1 className="text-2xl font-medium tracking-tight">Admin</h1>
-          <p className="text-sm text-white/60">
-            Build a shareable payment link. Configuration lives only in the URL.
-          </p>
-        </header>
-
-        <div className="text-center mb-6 animate-fade-in">
-          <h1 className="text-white/80 text-sm uppercase tracking-[0.3em] font-medium">
-            Admin Dashboard
-          </h1>
-          <p className="text-white/20 text-xs mt-1">
-            Generate payment links for your collection
-          </p>
-        </div>
+    <div className="min-h-screen bg-black px-4 py-8 sm:py-12">
+      <div className="w-full max-w-md mx-auto flex flex-col gap-6">
+        <nav className="w-full sticky top-0 z-40 backdrop-blur-xl border-b border-white/10 bg-black/80">
+          <div className="max-w-md mx-auto px-4 py-4 flex items-center justify-between">
+            <span className="text-white font-semibold tracking-tight text-lg">
+              VaultX
+            </span>
+            <div className="flex gap-4">
+              <Link
+                href="/"
+                className="text-xs hover:opacity-70 text-white/40 transition-opacity"
+              >
+                Home
+              </Link>
+            </div>
+          </div>
+        </nav>
 
         <form
           onSubmit={handleSubmit}
-          className="vaultx-glass vaultx-transition rounded-2xl p-6 space-y-5 shadow-none animate-fade-in-up"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8 flex flex-col gap-5"
         >
           <label className="block space-y-2">
             <span className="text-xs uppercase tracking-wider text-white/50">
@@ -83,7 +80,7 @@ export default function AdminPage() {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
               placeholder="e.g. Spring semester fee"
             />
           </label>
@@ -97,7 +94,7 @@ export default function AdminPage() {
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-200"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
               placeholder="0.1"
             />
             {adminNgn != null && (
@@ -131,21 +128,21 @@ export default function AdminPage() {
             <button
               type="button"
               onClick={saveOnrampRecipient}
-              className="vaultx-btn-primary vaultx-transition mt-2 w-full rounded-xl border border-white/15 bg-white/[0.08] py-2 text-sm font-medium text-white hover:bg-white/[0.12]"
+              className="mt-2 w-full py-3 rounded-xl font-medium transition-all duration-200 bg-white/10 border border-white/20 text-white hover:bg-white/15"
             >
               Save Onramp Recipient
             </button>
           </label>
           <button
             type="submit"
-            className="vaultx-btn-primary vaultx-transition w-full rounded-xl border border-white/15 bg-white/[0.08] py-3 text-sm font-medium text-white hover:bg-white/[0.12]"
+            className="w-full py-3 rounded-xl font-medium transition-all duration-200 bg-white/10 border border-white/20 text-white hover:bg-white/15"
           >
             Generate link
           </button>
         </form>
 
         {generatedPath && (
-          <div className="vaultx-glass vaultx-transition rounded-2xl p-6 space-y-3 animate-pulse-glow">
+          <div className="w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 space-y-3">
             <div className="flex items-center gap-2 text-white/50">
               <Link2 className="h-4 w-4" />
               <span className="text-xs uppercase tracking-wider">
@@ -159,7 +156,7 @@ export default function AdminPage() {
               <button
                 type="button"
                 onClick={copyUrl}
-                className="vaultx-btn-primary vaultx-transition inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.08] px-4 py-2 text-sm hover:bg-white/[0.12]"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-xl font-medium transition-all duration-200 bg-white/10 border border-white/20 text-white hover:bg-white/15"
               >
                 <Copy className="h-4 w-4" />
                 {copied ? "Copied" : "Copy to clipboard"}
@@ -174,14 +171,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        <p className="text-center text-xs text-white/35">
-          <Link
-            href="/"
-            className="vaultx-transition hover:text-white/60"
-          >
-            ← Home
-          </Link>
-        </p>
+
       </div>
     </div>
   );
