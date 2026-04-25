@@ -467,10 +467,7 @@ body::after {
     border-color: rgba(255,107,53,0.15) !important;
   }
 
-  /* Faster transitions */
-  * {
-    transition-duration: 0.15s !important;
-  }
+
 
   /* Keep critical animations */
   .animate-fade-in,
@@ -489,21 +486,34 @@ body::after {
 }
 
 @media (max-width: 480px) {
-  /* Extra aggressive for very small/old phones */
-  * {
+  /* Kill only expensive GPU animations */
+  .shimmer-orange,
+  .holo-text,
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-orange-pulse,
+  .glow-border::before,
+  .glass-edge::after,
+  .btn-shimmer::after {
     animation: none !important;
-    transition: none !important;
   }
-  
-  /* Re-enable only critical ones */
-  .animate-fade-in {
-    animation: fade-in 0.3s ease forwards !important;
+
+  /* Kill backdrop blur — biggest lag cause */
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
-  .animate-fade-in-up {
-    animation: fade-in-up-toast 0.25s ease-out forwards !important;
+
+  /* Compensate blur with solid bg */
+  .rounded-2xl,
+  .rounded-xl {
+    background-color: rgba(12,12,12,0.97) !important;
   }
-  .skeleton {
-    animation: skeleton-shimmer 1.5s ease infinite !important;
+
+  /* Kill box shadows */
+  .glass-depth,
+  .glass-depth:hover {
+    box-shadow: none !important;
   }
 }
 
