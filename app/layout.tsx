@@ -8,6 +8,7 @@ import CustomCursor from "@/components/CustomCursor";
 import LoadingScreen from "@/components/LoadingScreen";
 import AnimatedFavicon from "@/components/AnimatedFavicon";
 import ScrollProgress from "@/components/ScrollProgress";
+import TickerTape from "@/components/TickerTape";
 
 const geist = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
         <LoadingScreen />
         <AnimatedFavicon />
         <ScrollProgress />
+        <TickerTape />
         <BackgroundOrb />
         <WalletContextProvider>{children}</WalletContextProvider>
       </body>

@@ -15,6 +15,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import TiltCard from "@/components/TiltCard";
+import WalletAddress from "@/components/WalletAddress";
 
 
 const WalletMultiButton = dynamic(
@@ -106,6 +107,8 @@ export default function PayView() {
   const [ledgerLoading, setLedgerLoading] = useState(true);
   const [ledgerError, setLedgerError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [txProgress, setTxProgress] = useState(0);
+  const [txProgressVisible, setTxProgressVisible] = useState(false);
   const [paymentMode, setPaymentMode] = useState<PaymentMode>("selection");
   const [bankDetails, setBankDetails] = useState<{
     accountNumber: string;
@@ -342,8 +345,21 @@ export default function PayView() {
       setPayError("Please enter your matriculation number");
       return;
     }
+    setTxProgress(0);
+    setTxProgressVisible(true);
     setPaying(true);
     setPayError(null);
+
+    const progressInterval = setInterval(() => {
+      setTxProgress(p => {
+        if (p >= 90) {
+          clearInterval(progressInterval);
+          return 90;
+        }
+        return p + Math.random() * 15 + 5;
+      });
+    }, 300);
+
     try {
       const tx = new Transaction().add(
         SystemProgram.transfer({
@@ -354,6 +370,9 @@ export default function PayView() {
         createMemoInstruction("VaultX|" + name + "|" + matric, [publicKey])
       );
       const sig = await sendTransaction(tx, connection);
+      clearInterval(progressInterval);
+      setTxProgress(100);
+      setTimeout(() => setTxProgressVisible(false), 1000);
       setHasPaid(true);
       setPaidTxDetails({
         signature: sig,
@@ -365,6 +384,9 @@ export default function PayView() {
       setTimeout(() => setShowSuccess(false), 4000);
     } catch (err: unknown) {
       console.error("Payment error:", err);
+      clearInterval(progressInterval);
+      setTxProgressVisible(false);
+      setTxProgress(0);
       setPayError(err instanceof Error ? err.message : "Transaction failed. Please try again.");
      } finally {
        setPaying(false);
@@ -456,6 +478,23 @@ export default function PayView() {
 
         {paramsValid && (
           <>
+            {txProgressVisible && (
+              <div
+                style={{
+                  position: "fixed",
+                  top: 0,
+                  left: 0,
+                  width: Math.min(txProgress, 100) + "%",
+                  height: "3px",
+                  background:
+                    "linear-gradient(90deg, #FF6B35, #ffaa80)",
+                  boxShadow: "0 0 10px rgba(255,107,53,0.8)",
+                  zIndex: 99996,
+                  transition: "width 0.3s ease",
+                }}
+              />
+            )}
+
             {/* Main Glass Card */}
             <TiltCard className="w-full">
               <motion.div
@@ -497,9 +536,14 @@ export default function PayView() {
                     Live rate unavailable
                   </p>
                 )}
-                <p className="text-white/25 font-mono text-sm mt-2 break-all">
-                  To {destinationKey?.toBase58()}
-                </p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-white/20 text-xs">To</span>
+                  {destinationKey && (
+                    <WalletAddress
+                      address={destinationKey.toBase58()}
+                    />
+                  )}
+                </div>
                 <p className="text-[#FF6B35]/30 text-xs mt-1
                   tracking-widest uppercase">
                   Don&apos;t trust — verify
@@ -515,7 +559,7 @@ export default function PayView() {
                     transition={{ duration: 0.4, ease: "easeOut" }}
                     className="flex flex-col items-center gap-5 py-4 text-center"
                   >
-                    <div className="w-16 h-16 rounded-full border border-green-400/30 bg-green-400/10 flex items-center justify-center shadow-[0_0_30px_rgba(74,222,128,0.15),inset_0_1px_0_rgba(74,222,128,0.2)]">
+                    <div className="tx-pulse w-16 h-16 rounded-full border border-green-400/30 bg-green-400/10 flex items-center justify-center shadow-[0_0_30px_rgba(74,222,128,0.15),inset_0_1px_0_rgba(74,222,128,0.2)]">
                       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(74,222,128,1)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
@@ -787,6 +831,48 @@ export default function PayView() {
                     </span>
                   </div>
                 </div>
+
+                {ledgerLoading && ledger.length === 0 && (
+                  <div className="px-4 py-4 flex flex-col gap-3">
+                    {[1, 2, 3].map(i => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-4 px-4 py-3"
+                      >
+                        <div
+                          className="skeleton"
+                          style={{
+                            width: "120px",
+                            height: "12px",
+                            opacity: 1 - i * 0.2,
+                          }}
+                        />
+                        <div
+                          className="skeleton"
+                          style={{
+                            width: "60px",
+                            height: "12px",
+                            opacity: 1 - i * 0.2,
+                          }}
+                        />
+                        <div
+                          className="skeleton"
+                          style={{
+                            width: "80px",
+                            height: "12px",
+                            opacity: 1 - i * 0.2,
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {!ledgerLoading && !ledgerError && ledger.length === 0 && (
+                  <div className="px-4 py-6 text-center">
+                    <p className="text-white/20 text-xs">No transactions yet.</p>
+                  </div>
+                )}
 
                 {ledger.length > 0 && (
                   <div className="overflow-x-auto">
