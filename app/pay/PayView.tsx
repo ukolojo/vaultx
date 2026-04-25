@@ -16,6 +16,9 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import TiltCard from "@/components/TiltCard";
 import WalletAddress from "@/components/WalletAddress";
+import RippleButton from "@/components/RippleButton";
+import FloatingInput from "@/components/FloatingInput";
+import RollingNumber from "@/components/RollingNumber";
 
 
 const WalletMultiButton = dynamic(
@@ -527,9 +530,11 @@ export default function PayView() {
                   </p>
                 )}
                 {!rateLoading && ngnValue !== null && (
-                  <p className="text-[#FF6B35]/70 text-sm sm:text-base mt-1">
-                    ≈ ₦{ngnValue.toLocaleString("en-NG", { maximumFractionDigits: 2 })}
-                  </p>
+                  <RollingNumber
+                    value={ngnValue}
+                    prefix="≈ ₦"
+                    className="text-[#FF6B35]/70 text-sm sm:text-base mt-1 block"
+                  />
                 )}
                 {!rateLoading && ngnValue === null && (
                   <p className="text-red-400/50 text-xs mt-1">
@@ -609,10 +614,7 @@ export default function PayView() {
                     {/* SELECTION */}
                     {paymentMode === "selection" && (
                       <div className="flex flex-col gap-3">
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.97 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        <RippleButton
                           onClick={() => { setPaymentMode("sol"); setConfirmStage("idle"); setHasAddedEntry(false); }}
                           className="btn-shimmer w-full py-3 sm:py-4 rounded-xl
                             bg-[#FF6B35]/10 border border-[#FF6B35]/30
@@ -622,11 +624,8 @@ export default function PayView() {
                             transition-all duration-200"
                         >
                           Pay with SOL
-                        </motion.button>
-                        <motion.button
-                          whileHover={{ scale: 1.01 }}
-                          whileTap={{ scale: 0.98 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        </RippleButton>
+                        <RippleButton
                           onClick={() => { setPaymentMode("naira"); setConfirmStage("idle"); setHasAddedEntry(false); }}
                           className="btn-shimmer w-full py-3 sm:py-4 rounded-xl
                             bg-white/[0.06] border border-white/[0.10]
@@ -635,28 +634,25 @@ export default function PayView() {
                             transition-all duration-200"
                         >
                           Pay with Naira (Bank Transfer)
-                        </motion.button>
+                        </RippleButton>
                       </div>
                     )}
 
                     {/* SOL MODE */}
                     {paymentMode === "sol" && (
                       <div className="flex flex-col gap-3">
-                        <label className="text-white/40 text-xs uppercase tracking-wider">
-                          Matriculation Number
-                        </label>
-                        <input
-                          required
+                        <FloatingInput
+                          label="Matriculation Number"
                           value={matric}
-                          onChange={(e) => setMatric(e.target.value)}
+                          onChange={setMatric}
+                          placeholder="e.g. FUL/23/CSC/001"
+                          required
                           className="w-full rounded-xl px-4 py-3 text-sm
                             outline-none border border-white/[0.08]
                             bg-white/[0.04] text-white
-                            placeholder:text-white/25
                             focus:border-[#FF6B35]/40
                             focus:shadow-[0_0_0_3px_rgba(255,107,53,0.08)]
                             transition-all duration-200"
-                          placeholder="Enter your matriculation number"
                         />
                         {payError && (
                           <p className="text-red-400 text-xs">{payError}</p>
@@ -664,10 +660,7 @@ export default function PayView() {
                         <div className="flex justify-center">
                           <WalletMultiButton />
                         </div>
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.97 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        <RippleButton
                           type="button"
                           disabled={paying}
                           onClick={() => void handlePay()}
@@ -687,7 +680,7 @@ export default function PayView() {
                           ) : (
                             "Pay with VaultX"
                           )}
-                        </motion.button>
+                        </RippleButton>
                         <button
                           onClick={() => { setPaymentMode("selection"); setConfirmStage("idle"); setHasAddedEntry(false); }}
                           className="text-white/30 text-xs sm:text-sm hover:text-white/60 transition-colors mt-3 w-full text-center py-2"
@@ -702,23 +695,17 @@ export default function PayView() {
                       <div className="flex flex-col gap-3">
                         {bankDetails === null ? (
                           <div className="animate-fade-in flex flex-col gap-3">
-                            <label className="text-white/40 text-xs uppercase tracking-wider">
-                              Matriculation Number
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Enter your matriculation number"
+                            <FloatingInput
+                              label="Matriculation Number"
                               value={matric}
-                              onChange={(e) => setMatric(e.target.value)}
-                              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm sm:text-base placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors duration-200"
+                              onChange={setMatric}
+                              placeholder="e.g. FUL/23/CSC/001"
+                              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm sm:text-base focus:outline-none focus:border-white/30 transition-colors duration-200"
                             />
                             {payError && (
                               <p className="text-red-400 text-xs">{payError}</p>
                             )}
-                            <motion.button
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.97 }}
-                              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            <RippleButton
                               onClick={handleFetchBankDetails}
                               disabled={!matric.trim()}
                               className="w-full py-3 rounded-xl font-semibold
@@ -729,7 +716,7 @@ export default function PayView() {
                                 disabled:opacity-30 disabled:cursor-not-allowed"
                             >
                               Continue to Bank Transfer
-                            </motion.button>
+                            </RippleButton>
                           </div>
                         ) : (
                           <div className="animate-fade-in flex flex-col gap-3">
@@ -759,10 +746,7 @@ export default function PayView() {
                             <p className="text-white/20 text-xs text-center">
                               Naira to SOL conversion handled by Paj.cash. Rates may vary.
                             </p>
-                            <motion.button
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.97 }}
-                              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            <RippleButton
                               onClick={() => {
                                 setConfirmStage("verified");
                                 setShowSuccess(true);
@@ -791,7 +775,7 @@ export default function PayView() {
                                 hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]"
                             >
                               I&apos;ve Paid
-                            </motion.button>
+                            </RippleButton>
                           </div>
                         )}
 

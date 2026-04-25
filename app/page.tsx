@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import TorusKnot from "@/components/TorusKnot";
 import BlockCounter from "@/components/BlockCounter";
 import ScrambleText from "@/components/ScrambleText";
 import WordFade from "@/components/WordFade";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import MagneticButton from "@/components/MagneticButton";
 
 export default function Home() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -136,34 +139,26 @@ export default function Home() {
           />
           <div className="relative z-10 flex flex-col sm:flex-row gap-3
             w-full sm:w-auto reveal-fade-2">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            <MagneticButton
               className="btn-shimmer px-8 py-3.5 rounded-xl text-sm
               font-semibold bg-[#FF6B35]/10
               border border-[#FF6B35]/30 text-[#FF6B35]
               hover:bg-[#FF6B35]/20 hover:border-[#FF6B35]/50
               hover:shadow-[0_0_20px_rgba(255,107,53,0.2)]
               transition-all duration-200 text-center"
+              onClick={() => router.push("/admin")}
             >
-              <Link href="/admin" className="block">
-                Open Admin Dashboard
-              </Link>
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              Open Admin Dashboard
+            </MagneticButton>
+            <MagneticButton
               className="btn-shimmer px-8 py-3.5 rounded-xl text-sm
               border border-white/[0.10] text-white/50
               hover:border-white/20 hover:text-white
               transition-all duration-200 text-center"
+              onClick={() => router.push("/pay")}
             >
-              <Link href="/pay" className="block">
-                Payment Portal
-              </Link>
-            </motion.button>
+              Payment Portal
+            </MagneticButton>
           </div>
         </section>
 

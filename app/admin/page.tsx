@@ -5,6 +5,7 @@ import { Copy, Link2, Check } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import FloatingInput from "@/components/FloatingInput";
 
 const inputClass = "w-full rounded-xl px-4 py-3 text-sm outline-none border border-white/[0.08] bg-white/[0.04] text-white placeholder:text-white/25 focus:border-[#FF6B35]/40 focus:shadow-[0_0_0_3px_rgba(255,107,53,0.08)] transition-all duration-200";
 
@@ -104,32 +105,26 @@ export default function AdminPage() {
             bg-gradient-to-br from-[#FF6B35]/[0.03]
             via-transparent to-transparent rounded-2xl" />
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] text-white/40
-              uppercase tracking-[0.2em]">
-              Payment Title
-            </label>
-            <input
-              required
+            <FloatingInput
+              label="Payment Title"
               value={title}
-              onChange={e => setTitle(e.target.value)}
-              className={inputClass}
+              onChange={setTitle}
               placeholder="e.g. CSC 300 Level Manual Fee"
+              required
+              className={inputClass}
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] text-white/40
-              uppercase tracking-[0.2em]">
-              SOL Amount
-            </label>
-            <input
-              required
+            <FloatingInput
+              label="SOL Amount"
+              value={amount}
+              onChange={setAmount}
+              placeholder="0.002"
               type="text"
               inputMode="decimal"
-              value={amount}
-              onChange={e => setAmount(e.target.value)}
+              required
               className={inputClass}
-              placeholder="0.002"
             />
             {/* {adminNgn != null && (
               <p className="text-white/40 text-xs">
@@ -139,29 +134,23 @@ export default function AdminPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] text-white/40
-              uppercase tracking-[0.2em]">
-              Destination Wallet
-            </label>
-            <input
-              required
+            <FloatingInput
+              label="Destination Wallet"
               value={destination}
-              onChange={e => setDestination(e.target.value)}
-              className={inputClass + " font-mono"}
+              onChange={setDestination}
               placeholder="Solana address (devnet)"
+              required
+              className={inputClass + " font-mono"}
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] text-white/40
-              uppercase tracking-[0.2em]">
-              Onramp Recipient Wallet
-            </label>
-            <input
+            <FloatingInput
+              label="Onramp Recipient Wallet"
               value={onrampRecipient}
-              onChange={e => setOnrampRecipient(e.target.value)}
-              className={inputClass + " font-mono"}
+              onChange={setOnrampRecipient}
               placeholder="Solana address for onramp SOL"
+              className={inputClass + " font-mono"}
             />
             <motion.button
               type="button"
@@ -226,8 +215,36 @@ export default function AdminPage() {
               whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-              {copied ? "Copied!" : "Copy to Clipboard"}
+              {copied ? (
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    animation: "fade-in 0.2s ease forwards",
+                  }}
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#4ade80"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ animation: "fade-in 0.3s ease" }}
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span style={{ color: "#4ade80" }}>Copied!</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-2">
+                  <Copy className="h-4 w-4" />
+                  Copy to Clipboard
+                </span>
+              )}
             </motion.button>
             <p className="text-xs text-white/20">
               Format:{" "}
