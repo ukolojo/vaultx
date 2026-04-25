@@ -107,6 +107,10 @@ export default function PayView() {
     amount: string;
     timestamp: number;
   } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
   const [ledger, setLedger] = useState<LedgerEntry[]>([]);
   const [ledgerLoading, setLedgerLoading] = useState(true);
   const [ledgerError, setLedgerError] = useState(false);
@@ -321,7 +325,9 @@ export default function PayView() {
 
   useEffect(() => {
     fetchLedger();
-    const interval = setInterval(fetchLedger, 10000);
+    const pollInterval = 
+      window.innerWidth < 768 ? 30000 : 10000;
+    const interval = setInterval(fetchLedger, pollInterval);
     return () => clearInterval(interval);
   }, [fetchLedger]);
 

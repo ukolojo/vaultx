@@ -355,6 +355,21 @@ body {
     width: 100%;
   }
 
+  .animate-fade-in,
+  .reveal-top,
+  .reveal-bottom,
+  .reveal-fade {
+    will-change: opacity, transform;
+  }
+
+  .tilt-card {
+    will-change: transform;
+  }
+
+  .btn-shimmer::after {
+    will-change: transform;
+  }
+
   .diagonal-divider {
     position: relative;
     padding-top: 60px;
@@ -414,8 +429,87 @@ body::after {
   }
 }
 
-@media (max-width: 640px) {
-  .orb-container {
-    opacity: 0.5 !important;
+@media (max-width: 768px) {
+  /* Kill ALL backdrop blur on mobile — biggest lag cause */
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Compensate with solid backgrounds */
+  .rounded-2xl,
+  .rounded-xl {
+    background-color: rgba(12, 12, 12, 0.97) !important;
+  }
+
+  /* Kill expensive animations */
+  .shimmer-orange,
+  .holo-text,
+  .animate-float,
+  .animate-pulse-glow,
+  .animate-orange-pulse,
+  .glow-border::before,
+  .glass-edge::after,
+  .btn-shimmer::after,
+  .ticker-scroll {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Kill box shadows — expensive on mobile GPU */
+  .glass-depth,
+  .glass-depth:hover {
+    box-shadow: none !important;
+  }
+
+  /* Simplify border glows */
+  .glow-border {
+    border-color: rgba(255,107,53,0.15) !important;
+  }
+
+  /* Faster transitions */
+  * {
+    transition-duration: 0.15s !important;
+  }
+
+  /* Keep critical animations */
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .reveal-top,
+  .reveal-bottom,
+  .reveal-fade,
+  .reveal-fade-2,
+  .reveal-fade-3,
+  .skeleton,
+  .new-entry,
+  .tx-pulse {
+    transition-duration: unset !important;
+    animation-duration: unset !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra aggressive for very small/old phones */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Re-enable only critical ones */
+  .animate-fade-in {
+    animation: fade-in 0.3s ease forwards !important;
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up-toast 0.25s ease-out forwards !important;
+  }
+  .skeleton {
+    animation: skeleton-shimmer 1.5s ease infinite !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
   }
 }

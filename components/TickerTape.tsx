@@ -9,6 +9,7 @@ interface TickerItem {
 }
 
 export default function TickerTape() {
+  const [show, setShow] = useState(false);
   const [items, setItems] = useState<TickerItem[]>([
     { label: "SOL/USD", value: "Loading..." },
     { label: "SOL/NGN", value: "Loading..." },
@@ -16,6 +17,10 @@ export default function TickerTape() {
     { label: "VaultX", value: "v2.0" },
     { label: "Status", value: "● Live" },
   ]);
+
+  useEffect(() => {
+    setShow(window.innerWidth >= 768);
+  }, []);
 
   useEffect(() => {
     async function fetchPrices() {
@@ -61,6 +66,8 @@ export default function TickerTape() {
   }, []);
 
   const repeated = [...items, ...items, ...items];
+
+  if (!show) return null;
 
   return (
     <div

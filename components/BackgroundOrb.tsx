@@ -1,23 +1,47 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useDevicePerformance } from 
+  "@/hooks/useDevicePerformance";
 
 export default function BackgroundOrb() {
-  const orbRef = useRef<HTMLDivElement>(null);
+  const tier = useDevicePerformance();
 
-  useEffect(() => {
-    function onScroll() {
-      if (!orbRef.current) return;
-      const y = window.scrollY;
-      orbRef.current.style.transform =
-        `translate(-50%, calc(-50% + ${y * 0.15}px))`;
-    }
-    window.addEventListener("scroll", onScroll, {
-      passive: true,
-    });
-    return () =>
-      window.removeEventListener("scroll", onScroll);
-  }, []);
+  // Low tier — no orb at all
+  if (tier === "low") return null;
 
+  // Mid tier — static gradient only, no animation
+  if (tier === "mid") {
+    return (
+      <div
+        className="orb-container"
+        style={{
+          pointerEvents: "none",
+          position: "fixed",
+          inset: 0,
+          zIndex: 0,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "min(400px, 80vw)",
+            height: "min(400px, 80vw)",
+            borderRadius: "50%",
+            background: `radial-gradient(circle at 35% 35%,
+              rgba(30,30,30,0.8) 0%,
+              rgba(10,10,10,0.6) 50%,
+              transparent 80%
+            )`,
+            opacity: 0.4,
+          }}
+        />
+      </div>
+    );
+  }
+
+  // High tier — full animated orb
   return (
     <div
       className="orb-container"
@@ -30,7 +54,6 @@ export default function BackgroundOrb() {
       }}
     >
       <div
-        ref={orbRef}
         style={{
           position: "absolute",
           top: "50%",
@@ -52,6 +75,7 @@ export default function BackgroundOrb() {
           `,
           animation: "orb-rotate 20s linear infinite",
           opacity: 0.6,
+          willChange: "transform",
         }}
       >
         <div style={{
@@ -60,31 +84,43 @@ export default function BackgroundOrb() {
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Ccircle cx='1' cy='1' r='0.4' fill='rgba(255,255,255,0.06)'/%3E%3C/svg%3E")`,
           backgroundSize: "4px 4px",
           animation: "orb-rotate-reverse 30s linear infinite",
+          willChange: "transform",
         }} />
         <div style={{
           position: "absolute", inset: 0,
           borderRadius: "50%",
-          background: `repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(255,255,255,0.015) 18px, rgba(255,255,255,0.015) 19px)`,
+          background: `repeating-linear-gradient(
+            0deg, transparent, transparent 18px,
+            rgba(255,255,255,0.015) 18px,
+            rgba(255,255,255,0.015) 19px
+          )`,
         }} />
         <div style={{
           position: "absolute", inset: 0,
           borderRadius: "50%",
-          background: `repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(255,255,255,0.015) 18px, rgba(255,255,255,0.015) 19px)`,
+          background: `repeating-linear-gradient(
+            90deg, transparent, transparent 18px,
+            rgba(255,255,255,0.015) 18px,
+            rgba(255,255,255,0.015) 19px
+          )`,
           animation: "orb-rotate 25s linear infinite",
+          willChange: "transform",
         }} />
         <div style={{
           position: "absolute",
           top: "10%", left: "15%",
           width: "30%", height: "25%",
           borderRadius: "50%",
-          background: `radial-gradient(ellipse, rgba(255,255,255,0.06) 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse,
+            rgba(255,255,255,0.06) 0%, transparent 70%)`,
         }} />
         <div style={{
           position: "absolute",
           bottom: "15%", right: "10%",
           width: "40%", height: "35%",
           borderRadius: "50%",
-          background: `radial-gradient(ellipse, rgba(255,107,53,0.08) 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse,
+            rgba(255,107,53,0.08) 0%, transparent 70%)`,
         }} />
       </div>
     </div>
