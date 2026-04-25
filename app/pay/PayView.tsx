@@ -19,6 +19,7 @@ import WalletAddress from "@/components/WalletAddress";
 import RippleButton from "@/components/RippleButton";
 import FloatingInput from "@/components/FloatingInput";
 import RollingNumber from "@/components/RollingNumber";
+import Confetti from "@/components/Confetti";
 
 
 const WalletMultiButton = dynamic(
@@ -377,6 +378,10 @@ export default function PayView() {
       setTxProgress(100);
       setTimeout(() => setTxProgressVisible(false), 1000);
       setHasPaid(true);
+      if (typeof navigator !== "undefined" &&
+          navigator.vibrate) {
+        navigator.vibrate([100, 50, 100, 50, 200]);
+      }
       setPaidTxDetails({
         signature: sig,
         matric,
@@ -417,6 +422,8 @@ export default function PayView() {
         />
       </div>
 
+      <Confetti active={hasPaid} />
+
       {/* Success toast */}
       {showSuccess && (
         <motion.div
@@ -455,13 +462,13 @@ export default function PayView() {
               <Link href="/admin" className="text-xs text-white/40
                 hover:text-[#FF6B35] hover:bg-[#FF6B35]/10
                 px-3 py-1.5 rounded-lg transition-all duration-200
-                hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]">
+                hover:shadow-[0_0_10px_rgba(255,107,53,0.2)] nav-link-animated">
                 Admin
               </Link>
               <Link href="/" className="text-xs text-white/40
                 hover:text-[#FF6B35] hover:bg-[#FF6B35]/10
                 px-3 py-1.5 rounded-lg transition-all duration-200
-                hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]">
+                hover:shadow-[0_0_10px_rgba(255,107,53,0.2)] nav-link-animated">
                 Home
               </Link>
             </div>
@@ -752,6 +759,10 @@ export default function PayView() {
                                 setShowSuccess(true);
                                 setTimeout(() => setShowSuccess(false), 4000);
                                 setHasPaid(true);
+                                if (typeof navigator !== "undefined" &&
+                                    navigator.vibrate) {
+                                  navigator.vibrate([100, 50, 200]);
+                                }
                                 setPaidTxDetails({
                                   signature: "naira-" + Date.now(),
                                   matric,

@@ -80,7 +80,7 @@ export default function Home() {
             <Link
               href="/admin"
               className="text-xs text-white/40
-                hover:text-white transition-colors duration-200"
+                hover:text-white transition-colors duration-200 nav-link-animated"
             >
               Admin
             </Link>

@@ -82,7 +82,7 @@ export default function AdminPage() {
               className="text-xs text-white/40 hover:text-[#FF6B35]
               hover:bg-[#FF6B35]/10 px-3 py-1.5 rounded-lg
               transition-all duration-200
-              hover:shadow-[0_0_10px_rgba(255,107,53,0.2)]">
+              hover:shadow-[0_0_10px_rgba(255,107,53,0.2)] nav-link-animated">
               Home →
             </Link>
           </div>
