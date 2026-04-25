@@ -10,6 +10,7 @@ import ScrambleText from "@/components/ScrambleText";
 import WordFade from "@/components/WordFade";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import MagneticButton from "@/components/MagneticButton";
+import AnimatedStat from "@/components/AnimatedStat";
 
 export default function Home() {
   const router = useRouter();
@@ -168,34 +169,14 @@ export default function Home() {
         </div>
 
         {/* Stats */}
-        <RevealOnScroll direction="up" delay={0}>
-          <section className="w-full max-w-sm
-            grid grid-cols-3 gap-3">
-          {[
-            { val: "0ms", lbl: "Server delay" },
-            { val: "∞", lbl: "Audit trail" },
-            { val: "$0", lbl: "Trust required" },
-          ].map(item => (
-            <motion.div
-              key={item.lbl}
-              className="rounded-2xl border border-white/[0.06] 
-              bg-white/[0.03] backdrop-blur-xl p-4 text-center
-              hover:border-[#FF6B35]/20 hover:bg-[#FF6B35]/[0.03]
-              transition-all duration-300"
-              whileHover={{ scale: 1.03, y: -2 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <p className="text-2xl font-bold tracking-tight 
-                text-[#FF6B35]">{item.val}</p>
-              <p className="text-[10px] text-white/25 mt-1 
-                uppercase tracking-wider">{item.lbl}</p>
-            </motion.div>
-          ))}
+        <section className="w-full max-w-sm grid grid-cols-3 gap-3">
+          <AnimatedStat value="0ms" label="Server delay" isText />
+          <AnimatedStat value="∞" label="Audit trail" isText />
+          <AnimatedStat value="$0" label="Trust required" isText />
         </section>
-        </RevealOnScroll>
 
         {/* How It Works */}
-        <section className="w-full max-w-4xl">
+        <section className="w-full max-w-4xl diagonal-divider">
           <div className="flex items-center gap-3 
             justify-center mb-10">
             <div className="h-px flex-1 max-w-[80px] 
@@ -207,8 +188,8 @@ export default function Home() {
             <div className="h-px flex-1 max-w-[80px] 
               bg-white/[0.06]" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 
-            lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 
+            gap-4 auto-rows-fr">
             {[
               {
                 step: "01",
@@ -233,12 +214,12 @@ export default function Home() {
             ].map((item, index) => (
               <RevealOnScroll key={item.step} direction="up" delay={index * 0.1}>
                 <motion.div
-                  className="glow-border glass-edge glass-depth rounded-2xl border border-white/[0.06]
+                  className={`glow-border glass-edge glass-depth rounded-2xl border border-white/[0.06]
                   bg-white/[0.03] backdrop-blur-xl p-6
                   flex flex-col gap-4 group
                   hover:border-[#FF6B35]/20
                   hover:bg-[#FF6B35]/[0.03]
-                  transition-all duration-300"
+                  transition-all duration-300 ${index === 0 || index === 3 ? 'lg:row-span-1' : ''} ${index === 1 ? 'lg:col-span-2' : ''}`}
                   initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   whileHover={{ scale: 1.02, y: -2 }}
@@ -259,8 +240,8 @@ export default function Home() {
                     transition-colors duration-200">
                     {item.title}
                   </h3>
-                  <p className="text-white/35 text-xs 
-                    leading-relaxed">
+                  <p className={`text-white/35 text-xs 
+                    leading-relaxed ${index === 1 ? 'text-white/40 sm:text-sm' : ''}`}>
                     {item.body}
                   </p>
                 </div>
@@ -273,7 +254,7 @@ export default function Home() {
         {/* Glass Box Principle */}
         <RevealOnScroll direction="up" delay={0}>
           <motion.section
-            className="w-full max-w-2xl"
+            className="w-full max-w-2xl diagonal-divider"
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
